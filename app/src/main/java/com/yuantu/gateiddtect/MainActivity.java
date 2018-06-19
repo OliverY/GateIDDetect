@@ -18,17 +18,27 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.Toast;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by yxj on 2018/06/19.
  */
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends Activity {
 	private final String TAG = this.getClass().toString();
 
 	private static final int REQUEST_CODE_IMAGE_CAMERA = 1;
 	private static final int REQUEST_CODE_IMAGE_OP = 2;
 	private static final int REQUEST_CODE_OP = 3;
+
+	@BindView(R.id.btn_register)
+	Button btnRegister;
+	@BindView(R.id.btn_detect)
+	Button btnDetect;
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -37,11 +47,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.main_test);
-		View v = this.findViewById(R.id.button1);
-		v.setOnClickListener(this);
-		v = this.findViewById(R.id.button2);
-		v.setOnClickListener(this);
+		setContentView(R.layout.activity_main);
+		ButterKnife.bind(this);
 	}
 
 	/* (non-Javadoc)
@@ -83,56 +90,24 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	@Override
-	public void onClick(View paramView) {
-		// TODO Auto-generated method stub
-		switch (paramView.getId()) {
-			case R.id.button2:
-				if( ((Application)getApplicationContext()).mFaceDB.mRegister.isEmpty() ) {
-					Toast.makeText(this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
-				} else {
-					new AlertDialog.Builder(this)
-							.setTitle("请选择相机")
-							.setIcon(android.R.drawable.ic_dialog_info)
-							.setItems(new String[]{"后置相机", "前置相机"}, new DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(DialogInterface dialog, int which) {
-											startDetector(which);
-										}
-									})
-							.show();
-				}
-				break;
-			case R.id.button1:
-				new AlertDialog.Builder(this)
-						.setTitle("请选择注册方式")
-						.setIcon(android.R.drawable.ic_dialog_info)
-						.setItems(new String[]{"打开图片", "拍摄照片"}, new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								switch (which){
-									case 1:
-										Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-										ContentValues values = new ContentValues(1);
-										values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-										Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-										((Application)(MainActivity.this.getApplicationContext())).setCaptureImage(uri);
-										intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-										startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
-										break;
-									case 0:
-										Intent getImageByalbum = new Intent(Intent.ACTION_GET_CONTENT);
-										getImageByalbum.addCategory(Intent.CATEGORY_OPENABLE);
-										getImageByalbum.setType("image/jpeg");
-										startActivityForResult(getImageByalbum, REQUEST_CODE_IMAGE_OP);
-										break;
-									default:;
-								}
-							}
-						})
-						.show();
-				break;
-			default:;
+	@OnClick(R.id.btn_register)
+	public void register(){
+		Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+		ContentValues values = new ContentValues(1);
+		values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+		Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+		((Application)(MainActivity.this.getApplicationContext())).setCaptureImage(uri);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+		startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
+	}
+
+	@OnClick(R.id.btn_detect)
+	public void detect(){
+		if( ((Application)getApplicationContext()).mFaceDB.mRegister.isEmpty() ) {
+			Toast.makeText(this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
+		} else {
+			//0是后置，1是前置
+			startDetector(1);
 		}
 	}
 

@@ -30,6 +30,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.9.7'
+
+    // butterknife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
     //虹软人脸识别
     implementation files('libs/facedetection.jar')
     implementation files('libs/facerecognition.jar')

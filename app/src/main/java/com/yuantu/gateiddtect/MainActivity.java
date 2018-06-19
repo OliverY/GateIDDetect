@@ -1,11 +1,9 @@
 package com.yuantu.gateiddtect;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,9 +13,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -39,6 +36,8 @@ public class MainActivity extends Activity {
 	Button btnRegister;
 	@BindView(R.id.btn_detect)
 	Button btnDetect;
+	@BindView(R.id.rv_face)
+	RecyclerView rcFace;
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -67,7 +66,7 @@ public class MainActivity extends Activity {
 		if (requestCode == REQUEST_CODE_IMAGE_OP && resultCode == RESULT_OK) {
 			Uri mPath = data.getData();
 			String file = getPath(mPath);
-			Bitmap bmp = Application.decodeImage(file);
+			Bitmap bmp = GateApp.decodeImage(file);
 			if (bmp == null || bmp.getWidth() <= 0 || bmp.getHeight() <= 0 ) {
 				Log.e(TAG, "error");
 			} else {
@@ -83,9 +82,9 @@ public class MainActivity extends Activity {
 			String path = bundle.getString("imagePath");
 			Log.i(TAG, "path="+path);
 		} else if (requestCode == REQUEST_CODE_IMAGE_CAMERA && resultCode == RESULT_OK) {
-			Uri mPath = ((Application)(MainActivity.this.getApplicationContext())).getCaptureImage();
+			Uri mPath = ((GateApp)(MainActivity.this.getApplicationContext())).getCaptureImage();
 			String file = getPath(mPath);
-			Bitmap bmp = Application.decodeImage(file);
+			Bitmap bmp = GateApp.decodeImage(file);
 			startRegister(bmp, file);
 		}
 	}
@@ -96,14 +95,14 @@ public class MainActivity extends Activity {
 		ContentValues values = new ContentValues(1);
 		values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
 		Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-		((Application)(MainActivity.this.getApplicationContext())).setCaptureImage(uri);
+		((GateApp)(MainActivity.this.getApplicationContext())).setCaptureImage(uri);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 		startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
 	}
 
 	@OnClick(R.id.btn_detect)
 	public void detect(){
-		if( ((Application)getApplicationContext()).mFaceDB.mRegister.isEmpty() ) {
+		if( ((GateApp)getApplicationContext()).mFaceDB.mRegister.isEmpty() ) {
 			Toast.makeText(this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
 		} else {
 			//0是后置，1是前置

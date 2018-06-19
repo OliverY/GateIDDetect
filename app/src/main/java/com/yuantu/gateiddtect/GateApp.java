@@ -11,7 +11,7 @@ import android.util.Log;
  * Created by yxj on 2018/06/19.
  */
 
-public class Application extends android.app.Application {
+public class GateApp extends android.app.Application {
 	private final String TAG = this.getClass().toString();
 	FaceDB mFaceDB;
 	Uri mImage;

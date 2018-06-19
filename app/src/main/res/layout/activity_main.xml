@@ -14,7 +14,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="注册人脸"
+            android:text="用户注册"
             android:textSize="20sp" />
 
         <Button

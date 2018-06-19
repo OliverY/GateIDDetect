@@ -37,9 +37,9 @@ public class FaceDB {
 	AFR_FSDKVersion mFRVersion;
 	boolean mUpgrade;
 
-	class FaceRegist {
-		String mName;
-		List<AFR_FSDKFace> mFaceList;
+	public class FaceRegist {
+		public String mName;
+		public List<AFR_FSDKFace> mFaceList;
 
 		public FaceRegist(String name) {
 			mName = name;

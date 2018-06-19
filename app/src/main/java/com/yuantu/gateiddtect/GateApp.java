@@ -13,12 +13,15 @@ import android.util.Log;
 
 public class GateApp extends android.app.Application {
 	private final String TAG = this.getClass().toString();
-	FaceDB mFaceDB;
-	Uri mImage;
+	public FaceDB mFaceDB;
+	public Uri mImage;
+
+	public static GateApp instance;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		instance = this;
 		mFaceDB = new FaceDB(this.getExternalCacheDir().getPath());
 		mImage = null;
 	}

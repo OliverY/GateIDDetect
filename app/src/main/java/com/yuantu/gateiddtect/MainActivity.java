@@ -1,6 +1,5 @@
 package com.yuantu.gateiddtect;
 
-import android.app.Activity;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,20 +12,28 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.animation.BaseAnimation;
+import com.yuantu.gateiddtect.adapter.FaceAdapter;
+import com.yuantu.gateiddtect.base.BaseActivity;
+import com.yuantu.gateiddtect.utils.ToastUtils;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by yxj on 2018/06/19.
  */
-public class MainActivity extends Activity {
-	private final String TAG = this.getClass().toString();
+public class MainActivity extends BaseActivity {
+	private final String TAG = MainActivity.class.getSimpleName().toString();
 
 	private static final int REQUEST_CODE_IMAGE_CAMERA = 1;
 	private static final int REQUEST_CODE_IMAGE_OP = 2;
@@ -38,25 +45,37 @@ public class MainActivity extends Activity {
 	Button btnDetect;
 	@BindView(R.id.rv_face)
 	RecyclerView rcFace;
+	private FaceAdapter adapter;
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		ButterKnife.bind(this);
+	public int getContentView() {
+		return R.layout.activity_main;
 	}
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onDestroy()
-	 */
 	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
+	protected void initView() {
+		adapter = new FaceAdapter();
+		View emptyView = LayoutInflater.from(this).inflate(R.layout.empty_face,null);
+		adapter.setEmptyView(emptyView);
+		adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+		adapter.setOnItemClickListener((BaseQuickAdapter adapter, View view, int position)->{
+			showDialog("是否删除","确定要删除该用户信息吗",
+					"删除",()->{
+						ToastUtils.showShort(MainActivity.this,"删除");
+						GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mRegister.get(position).mName);
+						adapter.notifyItemRemoved(position);
+
+					},"再想想",()->{
+						ToastUtils.showShort(MainActivity.this,"等等");
+					});
+		});
+		rcFace.setLayoutManager(new GridLayoutManager(this,4));
+		rcFace.setAdapter(adapter);
+	}
+
+	@Override
+	protected void initData() {
+		adapter.setNewData(GateApp.instance.mFaceDB.mRegister);
 	}
 
 	@Override

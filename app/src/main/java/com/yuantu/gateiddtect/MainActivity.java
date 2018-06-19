@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.animation.BaseAnimation;
 import com.yuantu.gateiddtect.adapter.FaceAdapter;
 import com.yuantu.gateiddtect.base.BaseActivity;
 import com.yuantu.gateiddtect.utils.ToastUtils;
@@ -127,6 +126,7 @@ public class MainActivity extends BaseActivity {
 			//0是后置，1是前置
 			startDetector(1);
 		}
+
 	}
 
 	/**

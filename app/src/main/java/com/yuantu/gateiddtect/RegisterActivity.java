@@ -35,6 +35,7 @@ import com.arcsoft.facerecognition.AFR_FSDKVersion;
 import com.guo.android_extend.image.ImageConverter;
 import com.guo.android_extend.widget.ExtImageView;
 import com.guo.android_extend.widget.HListView;
+import com.yuantu.gateiddtect.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ import java.util.List;
  * Created by yxj on 2018/06/19.
  */
 
-public class RegisterActivity extends Activity implements SurfaceHolder.Callback {
+public class RegisterActivity extends BaseActivity implements SurfaceHolder.Callback {
 	private final String TAG = this.getClass().toString();
 	private final static int MSG_CODE = 0x1000;
 	private final static int MSG_EVENT_REG = 0x1001;
@@ -210,6 +211,21 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
 			}
 		});
 		view.start();
+
+	}
+
+	@Override
+	public int getContentView() {
+		return R.layout.activity_register;
+	}
+
+	@Override
+	protected void initView() {
+
+	}
+
+	@Override
+	protected void initData() {
 
 	}
 

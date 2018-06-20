@@ -10,10 +10,14 @@ import java.util.UUID;
  */
 public class UUIDUtil {
 
+//    public static String generateUUID(){
+//        String[] strs = UUID.randomUUID().toString().split("-");
+//        return new StringBuilder().append(strs[0])
+//                .append(strs[1])
+//                .append(strs[2]).toString();
+//    }
+
     public static String generateUUID(){
-        String[] strs = UUID.randomUUID().toString().split("-");
-        return new StringBuilder().append(strs[0])
-                .append(strs[1])
-                .append(strs[2]).toString();
+        return UUID.randomUUID().toString();
     }
 }

@@ -35,7 +35,7 @@ import com.guo.android_extend.image.ImageConverter;
 import com.guo.android_extend.widget.ExtImageView;
 import com.guo.android_extend.widget.HListView;
 import com.yuantu.gateiddtect.base.BaseActivity;
-import com.yuantu.gateiddtect.entity.FaceRegist;
+import com.yuantu.gateiddtect.bean.FaceRegist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -363,7 +363,7 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 
 			if (!((GateApp)mContext.getApplicationContext()).mFaceDB.mRegister.isEmpty()) {
 				FaceRegist face = ((GateApp) mContext.getApplicationContext()).mFaceDB.mRegister.get(position);
-				holder.tv.setText(face.mName);
+				holder.tv.setText(face.id);
 				//holder.siv.setImageResource(R.mipmap.ic_launcher);
 				convertView.setWillNotDraw(false);
 			}
@@ -374,7 +374,7 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Log.d("onItemClick", "onItemClick = " + position + "pos=" + mHListView.getScroll());
-			final String name = ((GateApp)mContext.getApplicationContext()).mFaceDB.mRegister.get(position).mName;
+			final String name = ((GateApp)mContext.getApplicationContext()).mFaceDB.mRegister.get(position).id;
 			final int count = ((GateApp)mContext.getApplicationContext()).mFaceDB.mRegister.get(position).mFaceList.size();
 			new AlertDialog.Builder(RegisterActivity.this)
 					.setTitle("删除注册名:" + name)

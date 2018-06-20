@@ -43,7 +43,7 @@ import com.guo.android_extend.widget.CameraFrameData;
 import com.guo.android_extend.widget.CameraGLSurfaceView;
 import com.guo.android_extend.widget.CameraSurfaceView;
 import com.guo.android_extend.widget.CameraSurfaceView.OnCameraListener;
-import com.yuantu.gateiddtect.entity.FaceRegist;
+import com.yuantu.gateiddtect.bean.FaceRegist;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -124,7 +124,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 						Log.d(TAG,  "Score:" + score.getScore() + ", AFR_FSDK_FacePairMatching=" + error.getCode());
 						if (max < score.getScore()) {
 							max = score.getScore();
-							name = fr.mName;
+							name = fr.id;
 						}
 					}
 				}

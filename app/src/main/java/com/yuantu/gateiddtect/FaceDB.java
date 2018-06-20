@@ -8,7 +8,7 @@ import com.arcsoft.facerecognition.AFR_FSDKFace;
 import com.arcsoft.facerecognition.AFR_FSDKVersion;
 import com.guo.android_extend.java.ExtInputStream;
 import com.guo.android_extend.java.ExtOutputStream;
-import com.yuantu.gateiddtect.entity.FaceRegist;
+import com.yuantu.gateiddtect.bean.FaceRegist;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -110,8 +110,8 @@ public class FaceDB {
 		if (loadInfo()) {
 			try {
 				for (FaceRegist face : mRegister) {
-					Log.d(TAG, "load name:" + face.mName + "'s face feature data.");
-					FileInputStream fs = new FileInputStream(mDBPath + "/" + face.mName + ".data");
+					Log.d(TAG, "load name:" + face.id + "'s face feature data.");
+					FileInputStream fs = new FileInputStream(mDBPath + "/" + face.id + ".data");
 					ExtInputStream bos = new ExtInputStream(fs);
 					AFR_FSDKFace afr = null;
 					do {
@@ -142,7 +142,7 @@ public class FaceDB {
 			//check if already registered.
 			boolean add = true;
 			for (FaceRegist frface : mRegister) {
-				if (frface.mName.equals(name)) {
+				if (frface.id.equals(name)) {
 					frface.mFaceList.add(face);
 					add = false;
 					break;
@@ -159,7 +159,7 @@ public class FaceDB {
 				FileOutputStream fs = new FileOutputStream(mDBPath + "/face.txt", true);
 				ExtOutputStream bos = new ExtOutputStream(fs);
 				for (FaceRegist frface : mRegister) {
-					bos.writeString(frface.mName);
+					bos.writeString(frface.id);
 				}
 				bos.close();
 				fs.close();
@@ -183,7 +183,7 @@ public class FaceDB {
 			//check if already registered.
 			boolean find = false;
 			for (FaceRegist frface : mRegister) {
-				if (frface.mName.equals(name)) {
+				if (frface.id.equals(name)) {
 					File delfile = new File(mDBPath + "/" + name + ".data");
 					if (delfile.exists()) {
 						delfile.delete();
@@ -200,7 +200,7 @@ public class FaceDB {
 					FileOutputStream fs = new FileOutputStream(mDBPath + "/face.txt", true);
 					ExtOutputStream bos = new ExtOutputStream(fs);
 					for (FaceRegist frface : mRegister) {
-						bos.writeString(frface.mName);
+						bos.writeString(frface.id);
 					}
 					bos.close();
 					fs.close();

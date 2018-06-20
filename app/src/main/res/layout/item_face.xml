@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:ellipsize="end"
-        android:maxLength="1"
+        android:maxLines="1"
         android:text="姓名"
         android:textColor="@color/white" />
 
@@ -24,7 +24,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
-        android:maxLength="1"
+        android:maxLines="1"
         android:text="几份样本"
         android:textColor="@color/white"
         android:textSize="9sp" />

@@ -1,4 +1,4 @@
-package com.yuantu.gateiddtect.entity;
+package com.yuantu.gateiddtect.bean;
 
 import com.arcsoft.facerecognition.AFR_FSDKFace;
 
@@ -12,11 +12,11 @@ import java.util.List;
  * Description:
  */
 public class FaceRegist {
-    public String mName;
+    public String id;
     public List<AFR_FSDKFace> mFaceList;
 
-    public FaceRegist(String name) {
-        mName = name;
+    public FaceRegist(String id) {
+        this.id = id;
         mFaceList = new ArrayList<>();
     }
 }

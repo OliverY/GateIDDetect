@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
 			showDialog("是否删除","确定要删除该用户信息吗",
 					"删除",()->{
 						ToastUtils.showShort(MainActivity.this,"删除");
-						GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mRegister.get(position).mName);
+						GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mRegister.get(position).id);
 						adapter.notifyItemRemoved(position);
 
 					},"再想想",()->{

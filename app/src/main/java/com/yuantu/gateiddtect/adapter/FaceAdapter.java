@@ -4,6 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yuantu.gateiddtect.FaceDB;
 import com.yuantu.gateiddtect.R;
+import com.yuantu.gateiddtect.entity.FaceRegist;
 
 /**
  * Author:  Yxj
@@ -11,14 +12,14 @@ import com.yuantu.gateiddtect.R;
  * -----------------------------------------
  * Description:
  */
-public class FaceAdapter extends BaseQuickAdapter<FaceDB.FaceRegist,BaseViewHolder> {
+public class FaceAdapter extends BaseQuickAdapter<FaceRegist,BaseViewHolder> {
 
     public FaceAdapter() {
         super(R.layout.item_face);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, FaceDB.FaceRegist faceRegist) {
+    protected void convert(BaseViewHolder helper, FaceRegist faceRegist) {
         helper.setText(R.id.tv_name,faceRegist.mName);
         helper.setText(R.id.tv_faces,"样本数量："+faceRegist.mFaceList.size());
     }

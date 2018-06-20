@@ -8,6 +8,7 @@ import com.arcsoft.facerecognition.AFR_FSDKFace;
 import com.arcsoft.facerecognition.AFR_FSDKVersion;
 import com.guo.android_extend.java.ExtInputStream;
 import com.guo.android_extend.java.ExtOutputStream;
+import com.yuantu.gateiddtect.entity.FaceRegist;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,20 +33,10 @@ public class FaceDB {
 	public static String gender_key = "3F9yy2fANTYfWKU61sUmiaF2VKDu7voTfZH4vA2r4vkN";
 
 	String mDBPath;
-	List<FaceRegist> mRegister;
+	public List<FaceRegist> mRegister;
 	AFR_FSDKEngine mFREngine;
 	AFR_FSDKVersion mFRVersion;
 	boolean mUpgrade;
-
-	public class FaceRegist {
-		public String mName;
-		public List<AFR_FSDKFace> mFaceList;
-
-		public FaceRegist(String name) {
-			mName = name;
-			mFaceList = new ArrayList<>();
-		}
-	}
 
 	public FaceDB(String path) {
 		mDBPath = path;

@@ -43,6 +43,7 @@ import com.guo.android_extend.widget.CameraFrameData;
 import com.guo.android_extend.widget.CameraGLSurfaceView;
 import com.guo.android_extend.widget.CameraSurfaceView;
 import com.guo.android_extend.widget.CameraSurfaceView.OnCameraListener;
+import com.yuantu.gateiddtect.entity.FaceRegist;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		AFR_FSDKVersion version = new AFR_FSDKVersion();
 		AFR_FSDKEngine engine = new AFR_FSDKEngine();
 		AFR_FSDKFace result = new AFR_FSDKFace();
-		List<FaceDB.FaceRegist> mResgist = ((GateApp)DetecterActivity.this.getApplicationContext()).mFaceDB.mRegister;
+		List<FaceRegist> mResgist = ((GateApp)DetecterActivity.this.getApplicationContext()).mFaceDB.mRegister;
 		List<ASAE_FSDKFace> face1 = new ArrayList<>();
 		List<ASGE_FSDKFace> face2 = new ArrayList<>();
 		
@@ -117,7 +118,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 				AFR_FSDKMatching score = new AFR_FSDKMatching();
 				float max = 0.0f;
 				String name = null;
-				for (FaceDB.FaceRegist fr : mResgist) {
+				for (FaceRegist fr : mResgist) {
 					for (AFR_FSDKFace face : fr.mFaceList) {
 						error = engine.AFR_FSDK_FacePairMatching(result, face, score);
 						Log.d(TAG,  "Score:" + score.getScore() + ", AFR_FSDK_FacePairMatching=" + error.getCode());

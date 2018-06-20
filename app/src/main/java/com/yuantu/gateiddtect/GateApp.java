@@ -7,11 +7,13 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.util.Log;
 
+import org.litepal.LitePalApplication;
+
 /**
  * Created by yxj on 2018/06/19.
  */
 
-public class GateApp extends android.app.Application {
+public class GateApp extends LitePalApplication {
 	private final String TAG = this.getClass().toString();
 	public FaceDB mFaceDB;
 	public Uri mImage;

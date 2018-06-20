@@ -1,6 +1,5 @@
 package com.yuantu.gateiddtect;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,6 +35,7 @@ import com.guo.android_extend.image.ImageConverter;
 import com.guo.android_extend.widget.ExtImageView;
 import com.guo.android_extend.widget.HListView;
 import com.yuantu.gateiddtect.base.BaseActivity;
+import com.yuantu.gateiddtect.entity.FaceRegist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -362,7 +362,7 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 			}
 
 			if (!((GateApp)mContext.getApplicationContext()).mFaceDB.mRegister.isEmpty()) {
-				FaceDB.FaceRegist face = ((GateApp) mContext.getApplicationContext()).mFaceDB.mRegister.get(position);
+				FaceRegist face = ((GateApp) mContext.getApplicationContext()).mFaceDB.mRegister.get(position);
 				holder.tv.setText(face.mName);
 				//holder.siv.setImageResource(R.mipmap.ic_launcher);
 				convertView.setWillNotDraw(false);

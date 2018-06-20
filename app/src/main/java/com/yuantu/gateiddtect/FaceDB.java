@@ -88,7 +88,7 @@ public class FaceDB {
             try {
                 for (MyFaceRegist face : mMyRegister) {
                     Log.d(TAG, "load name:" + face.faceId + "'s face feature data.");
-                    FileInputStream fs = new FileInputStream(mDBPath + "/" + face.id + ".data");
+                    FileInputStream fs = new FileInputStream(mDBPath + "/" + face.faceId + ".data");
                     ExtInputStream bos = new ExtInputStream(fs);
                     AFR_FSDKFace afr = null;
                     do {
@@ -138,6 +138,13 @@ public class FaceDB {
                 frface.faceId = uuid;
                 frface.name = name;
                 frface.mFaceList.add(face);
+
+                // 保存到数据库
+                FaceID faceID = new FaceID();
+                faceID.faceId = uuid;
+                faceID.name = name;
+                faceID.save();
+
                 mMyRegister.add(frface);
             }
 

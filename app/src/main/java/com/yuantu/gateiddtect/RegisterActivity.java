@@ -36,10 +36,6 @@ import com.guo.android_extend.widget.ExtImageView;
 import com.guo.android_extend.widget.HListView;
 import com.yuantu.gateiddtect.base.BaseActivity;
 import com.yuantu.gateiddtect.bean.FaceRegist;
-import com.yuantu.gateiddtect.bean.MyFaceRegist;
-import com.yuantu.gateiddtect.model.FaceID;
-
-import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -366,7 +362,7 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 			}
 
 			if (!((GateApp)mContext.getApplicationContext()).mFaceDB.mMyRegister.isEmpty()) {
-				MyFaceRegist face = ((GateApp) mContext.getApplicationContext()).mFaceDB.mMyRegister.get(position);
+				FaceRegist face = ((GateApp) mContext.getApplicationContext()).mFaceDB.mMyRegister.get(position);
 				holder.tv.setText(face.name);
 				//holder.siv.setImageResource(R.mipmap.ic_launcher);
 				convertView.setWillNotDraw(false);
@@ -378,10 +374,10 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Log.d("onItemClick", "onItemClick = " + position + "pos=" + mHListView.getScroll());
-			final MyFaceRegist myFaceRegist = ((GateApp)mContext.getApplicationContext()).mFaceDB.mMyRegister.get(position);
-			final long dbId = myFaceRegist.id;
-			final String name = myFaceRegist.name;
-			final int count = myFaceRegist.mFaceList.size();
+			final FaceRegist faceRegist = ((GateApp)mContext.getApplicationContext()).mFaceDB.mMyRegister.get(position);
+			final long dbId = faceRegist.id;
+			final String name = faceRegist.name;
+			final int count = faceRegist.mFaceList.size();
 			new AlertDialog.Builder(RegisterActivity.this)
 					.setTitle("删除注册名:" + name)
 					.setMessage("包含:" + count + "个注册人脸特征信息")

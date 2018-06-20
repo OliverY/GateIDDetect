@@ -23,11 +23,8 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yuantu.gateiddtect.adapter.FaceAdapter;
 import com.yuantu.gateiddtect.base.BaseActivity;
-import com.yuantu.gateiddtect.bean.MyFaceRegist;
-import com.yuantu.gateiddtect.model.FaceID;
+import com.yuantu.gateiddtect.bean.FaceRegist;
 import com.yuantu.gateiddtect.utils.ToastUtils;
-
-import org.litepal.LitePal;
 
 import java.util.List;
 
@@ -51,7 +48,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.rv_face)
     RecyclerView rcFace;
     private FaceAdapter adapter;
-    private List<MyFaceRegist> myFaceRegistList;
+    private List<FaceRegist> faceRegistList;
 
     @Override
     public int getContentView() {
@@ -69,7 +66,7 @@ public class MainActivity extends BaseActivity {
                     "删除", () -> {
                         ToastUtils.showShort(MainActivity.this, "删除");
                         GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mMyRegister.get(position).id);
-                        myFaceRegistList.remove(position);
+                        faceRegistList.remove(position);
                         adapter.notifyItemRemoved(position);
 
                     }, "再想想", () -> {
@@ -82,8 +79,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        myFaceRegistList = GateApp.instance.mFaceDB.mMyRegister;
-        adapter.setNewData(myFaceRegistList);
+        faceRegistList = GateApp.instance.mFaceDB.mMyRegister;
+        adapter.setNewData(faceRegistList);
     }
 
     @Override

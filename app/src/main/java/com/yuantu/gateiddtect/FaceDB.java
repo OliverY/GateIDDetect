@@ -9,7 +9,6 @@ import com.arcsoft.facerecognition.AFR_FSDKVersion;
 import com.guo.android_extend.java.ExtInputStream;
 import com.guo.android_extend.java.ExtOutputStream;
 import com.yuantu.gateiddtect.bean.FaceRegist;
-import com.yuantu.gateiddtect.bean.MyFaceRegist;
 import com.yuantu.gateiddtect.model.FaceID;
 import com.yuantu.gateiddtect.utils.UUIDUtil;
 
@@ -38,7 +37,7 @@ public class FaceDB {
     public static String gender_key = "3F9yy2fANTYfWKU61sUmiaF2VKDu7voTfZH4vA2r4vkN";
 
     String mDBPath;
-    public List<MyFaceRegist> mMyRegister;
+    public List<FaceRegist> mMyRegister;
     AFR_FSDKEngine mFREngine;
     AFR_FSDKVersion mFRVersion;
     boolean mUpgrade;
@@ -73,7 +72,7 @@ public class FaceDB {
 
         for (FaceID faceID : faceIDList) {
             if (new File(mDBPath + "/" + faceID.faceId + ".data").exists()) {
-                MyFaceRegist regist = new MyFaceRegist();
+                FaceRegist regist = new FaceRegist();
                 regist.id = faceID.id;
                 regist.faceId = faceID.faceId;
                 regist.name = faceID.name;
@@ -86,7 +85,7 @@ public class FaceDB {
     public boolean loadFaces() {
         if (loadInfo()) {
             try {
-                for (MyFaceRegist face : mMyRegister) {
+                for (FaceRegist face : mMyRegister) {
                     Log.d(TAG, "load name:" + face.faceId + "'s face feature data.");
                     FileInputStream fs = new FileInputStream(mDBPath + "/" + face.id + ".data");
                     ExtInputStream bos = new ExtInputStream(fs);
@@ -124,7 +123,7 @@ public class FaceDB {
             //check if already registered.
             boolean add = true;
             String uuid = "";
-            for (MyFaceRegist frface : mMyRegister) {
+            for (FaceRegist frface : mMyRegister) {
                 if (frface.name.equals(name)) {
                     frface.mFaceList.add(face);
                     uuid = frface.faceId;
@@ -133,7 +132,7 @@ public class FaceDB {
                 }
             }
             if (add) { // not registered.
-                MyFaceRegist frface = new MyFaceRegist();
+                FaceRegist frface = new FaceRegist();
                 uuid = UUIDUtil.generateUUID();
                 frface.faceId = uuid;
                 frface.name = name;
@@ -163,7 +162,7 @@ public class FaceDB {
     public boolean delete(long id) {
         //check if already registered.
         boolean find = false;
-        for (MyFaceRegist frface : mMyRegister) {
+        for (FaceRegist frface : mMyRegister) {
             if (frface.id == id) {
                 File delfile = new File(mDBPath + "/" + frface.faceId + ".data");
                 if (delfile.exists()) {

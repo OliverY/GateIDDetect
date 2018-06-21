@@ -1,8 +1,5 @@
 package com.yuantu.gateiddtect;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,17 +7,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Message;
-import android.text.InputFilter;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arcsoft.facedetection.AFD_FSDKEngine;
@@ -33,10 +24,8 @@ import com.arcsoft.facerecognition.AFR_FSDKFace;
 import com.arcsoft.facerecognition.AFR_FSDKVersion;
 import com.guo.android_extend.image.ImageConverter;
 import com.guo.android_extend.widget.ExtImageView;
-import com.guo.android_extend.widget.HListView;
 import com.yuantu.gateiddtect.base.BaseActivity;
-import com.yuantu.gateiddtect.bean.FaceRegist;
-import com.yuantu.gateiddtect.utils.FileUtils;
+import com.yuantu.gateiddtect.widget.dialog.RegistPortraitDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,27 +52,24 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 	private Rect src = new Rect();
 	private Rect dst = new Rect();
 	private Thread view;
-	private EditText mEditText;
-	private ExtImageView mExtImageView;
-	private HListView mHListView;
-	private RegisterViewAdapter mRegisterViewAdapter;
 	private AFR_FSDKFace mAFR_FSDKFace;
 
+	private long id;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.activity_register);
+	public int getContentView() {
+		return R.layout.activity_register;
+	}
+
+	@Override
+	protected void initView() {
+		id = getIntent().getLongExtra(Constants.EXTRA.ID,-1);
+
 		//initial data.
 		if (!getIntentData(getIntent().getExtras())) {
 			Log.e(TAG, "getIntentData fail!");
 			this.finish() ;
 		}
-
-		mRegisterViewAdapter = new RegisterViewAdapter(this);
-		mHListView = (HListView)findViewById(R.id.hlistView);
-		mHListView.setAdapter(mRegisterViewAdapter);
-		mHListView.setOnItemClickListener(mRegisterViewAdapter);
 
 		mUIHandler = new UIHandler();
 		mBitmap = GateApp.decodeImage(mFilePath);
@@ -212,17 +198,6 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 			}
 		});
 		view.start();
-
-	}
-
-	@Override
-	public int getContentView() {
-		return R.layout.activity_register;
-	}
-
-	@Override
-	protected void initView() {
-
 	}
 
 	@Override
@@ -276,34 +251,13 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 			super.handleMessage(msg);
 			if (msg.what == MSG_CODE) {
 				if (msg.arg1 == MSG_EVENT_REG) {
-					LayoutInflater inflater = LayoutInflater.from(RegisterActivity.this);
-					View layout = inflater.inflate(R.layout.dialog_register, null);
-					mEditText = (EditText) layout.findViewById(R.id.editview);
-					mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
-					mExtImageView = (ExtImageView) layout.findViewById(R.id.extimageview);
 					Bitmap bitmap = (Bitmap) msg.obj;
-					mExtImageView.setImageBitmap(bitmap);
-
-					final Bitmap face = (Bitmap) msg.obj;
-					new AlertDialog.Builder(RegisterActivity.this)
-							.setTitle("请输入注册名字")
-							.setIcon(android.R.drawable.ic_dialog_info)
-							.setView(layout)
-							.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									((GateApp)RegisterActivity.this.getApplicationContext()).mFaceDB.addFace(mEditText.getText().toString(), mAFR_FSDKFace,bitmap);
-									mRegisterViewAdapter.notifyDataSetChanged();
-									dialog.dismiss();
-								}
-							})
-							.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									dialog.dismiss();
-								}
-							})
-							.show();
+					if(id == -1){//新增
+						showAddDialog(bitmap);
+					}else{//添加
+						GateApp.instance.mFaceDB.updateFace(id,mAFR_FSDKFace,bitmap);
+						finish();
+					}
 				} else if(msg.arg1 == MSG_EVENT_NO_FEATURE ){
 					Toast.makeText(RegisterActivity.this, "人脸特征无法检测，请换一张图片", Toast.LENGTH_SHORT).show();
 				} else if(msg.arg1 == MSG_EVENT_NO_FACE ){
@@ -317,93 +271,15 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 		}
 	}
 
-	private String generateImgName(){
-		return System.currentTimeMillis()+".jpg";
+	private void showAddDialog(Bitmap bitmap){
+		RegistPortraitDialog dialog = RegistPortraitDialog.newInstance(bitmap);
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		ft.setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+		dialog.show(ft,"showRegist");
+		dialog.setClick((name)->{
+			GateApp.instance.mFaceDB.addFace(name, mAFR_FSDKFace,bitmap);
+		});
+
 	}
 
-	class Holder {
-		ExtImageView siv;
-		TextView tv;
-	}
-
-	class RegisterViewAdapter extends BaseAdapter implements AdapterView.OnItemClickListener{
-		Context mContext;
-		LayoutInflater mLInflater;
-
-		public RegisterViewAdapter(Context c) {
-			// TODO Auto-generated constructor stub
-			mContext = c;
-			mLInflater = LayoutInflater.from(mContext);
-		}
-
-		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			return ((GateApp)mContext.getApplicationContext()).mFaceDB.mRegister.size();
-		}
-
-		@Override
-		public Object getItem(int arg0) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			// TODO Auto-generated method stub
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
-			Holder holder = null;
-			if (convertView != null) {
-				holder = (Holder) convertView.getTag();
-			} else {
-				convertView = mLInflater.inflate(R.layout.item_sample, null);
-				holder = new Holder();
-				holder.siv = (ExtImageView) convertView.findViewById(R.id.imageView1);
-				holder.tv = (TextView) convertView.findViewById(R.id.textView1);
-				convertView.setTag(holder);
-			}
-
-			if (!((GateApp)mContext.getApplicationContext()).mFaceDB.mRegister.isEmpty()) {
-				FaceRegist face = ((GateApp) mContext.getApplicationContext()).mFaceDB.mRegister.get(position);
-				holder.tv.setText(face.name);
-				//holder.siv.setImageResource(R.mipmap.ic_launcher);
-				convertView.setWillNotDraw(false);
-			}
-
-			return convertView;
-		}
-
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			Log.d("onItemClick", "onItemClick = " + position + "pos=" + mHListView.getScroll());
-			final FaceRegist faceRegist = ((GateApp)mContext.getApplicationContext()).mFaceDB.mRegister.get(position);
-			final long dbId = faceRegist.id;
-			final String name = faceRegist.name;
-			final int count = faceRegist.mFaceList.size();
-			new AlertDialog.Builder(RegisterActivity.this)
-					.setTitle("删除注册名:" + name)
-					.setMessage("包含:" + count + "个注册人脸特征信息")
-					.setIcon(android.R.drawable.ic_dialog_alert)
-					.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							((GateApp)mContext.getApplicationContext()).mFaceDB.delete(dbId);
-							mRegisterViewAdapter.notifyDataSetChanged();
-							dialog.dismiss();
-						}
-					})
-					.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-						}
-					})
-					.show();
-		}
-	}
 }

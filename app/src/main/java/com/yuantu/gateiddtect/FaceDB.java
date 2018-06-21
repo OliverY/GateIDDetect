@@ -115,6 +115,46 @@ public class FaceDB {
     }
 
     /**
+     * 更新内存、文件（图片文件，脸纹摘要）、数据库
+     * @param id
+     * @param face
+     * @param bitmap
+     */
+    public void updateFace(long id,AFR_FSDKFace face,Bitmap bitmap){
+        /*
+            数据保存进内存及数据库
+            face保存进文件中
+            图片保存成文件
+            （不一定按顺序）
+         */
+
+        FaceModel faceModel = LitePal.find(FaceModel.class,id);
+        if(faceModel == null){
+            throw new RuntimeException("该用户不存在");
+        }
+
+        // 图片保存到本地
+        String portrait = FileUtils.generateImgName(FileUtils.getPortraitPath(),faceModel.name);
+        Log.i(TAG,"portrait:"+portrait);
+        FileUtils.saveBitmap(bitmap,portrait);
+
+        // 更新数据库
+        faceModel.addPortrait(portrait);
+        faceModel.save();
+
+        for(FaceRegist frface:mRegister){
+            if(id==frface.id){
+                // 更新内存
+                frface.portrait = faceModel.portrait;
+                frface.mFaceList.add(face);
+            }
+        }
+
+        //更新文件
+        saveArcFaceData(face,faceModel.faceId);
+    }
+
+    /**
      * 添加
      * @param name 姓名,可为中文
      * @param face 人脸信息
@@ -209,6 +249,8 @@ public class FaceDB {
 
     /**
      * 删除人脸信息
+     *
+     * 删除内存、文件、数据库
      * @param id 用户的自增id
      * @return
      */
@@ -223,6 +265,7 @@ public class FaceDB {
                 }
                 //数据库删除
                 LitePal.delete(FaceModel.class,id);
+                mRegister.remove(frface);
                 find = true;
                 break;
             }

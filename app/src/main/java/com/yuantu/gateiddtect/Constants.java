@@ -17,9 +17,11 @@ public class Constants {
         String gender_key = "3F9yy2fANTYfWKU61sUmiaF2VKDu7voTfZH4vA2r4vkN";
     }
 
-    public interface BUNDLE_ARG{
+    public interface EXTRA {
         String IMG_LIST = "imgList";
         String NAME = "name";
+        String ID = "id";
+        String PORTRAIT = "portrait";
     }
 
     public interface REGEX{

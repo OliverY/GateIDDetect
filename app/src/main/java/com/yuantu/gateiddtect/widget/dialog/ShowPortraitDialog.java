@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,8 +47,8 @@ public class ShowPortraitDialog extends CustomDialog {
     public static ShowPortraitDialog newInstance(ArrayList<String> imgList,String name) {
         ShowPortraitDialog dialog = new ShowPortraitDialog();
         Bundle args = new Bundle();
-        args.putStringArrayList(Constants.BUNDLE_ARG.IMG_LIST, imgList);
-        args.putString(Constants.BUNDLE_ARG.NAME, name);
+        args.putStringArrayList(Constants.EXTRA.IMG_LIST, imgList);
+        args.putString(Constants.EXTRA.NAME, name);
         dialog.setArguments(args);
         return dialog;
     }
@@ -76,8 +75,8 @@ public class ShowPortraitDialog extends CustomDialog {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        imgList = getArguments().getStringArrayList(Constants.BUNDLE_ARG.IMG_LIST);
-        name = getArguments().getString(Constants.BUNDLE_ARG.NAME);
+        imgList = getArguments().getStringArrayList(Constants.EXTRA.IMG_LIST);
+        name = getArguments().getString(Constants.EXTRA.NAME);
         setStyle(STYLE_NO_FRAME, android.R.style.Theme_Holo_Light);
         setCancelable(true);
     }

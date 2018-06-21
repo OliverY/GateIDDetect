@@ -116,7 +116,7 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 				AFD_FSDKEngine engine = new AFD_FSDKEngine();
 				AFD_FSDKVersion version = new AFD_FSDKVersion();
 				List<AFD_FSDKFace> result = new ArrayList<AFD_FSDKFace>();
-				AFD_FSDKError err = engine.AFD_FSDK_InitialFaceEngine(FaceDB.appid, FaceDB.fd_key, AFD_FSDKEngine.AFD_OPF_0_HIGHER_EXT, 16, 5);
+				AFD_FSDKError err = engine.AFD_FSDK_InitialFaceEngine(Constants.Arc.appid, Constants.Arc.fd_key, AFD_FSDKEngine.AFD_OPF_0_HIGHER_EXT, 16, 5);
 				Log.d(TAG, "AFD_FSDK_InitialFaceEngine = " + err.getCode());
 				if (err.getCode() != AFD_FSDKError.MOK) {
 					Message reg = Message.obtain();
@@ -168,7 +168,7 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 					AFR_FSDKVersion version1 = new AFR_FSDKVersion();
 					AFR_FSDKEngine engine1 = new AFR_FSDKEngine();
 					AFR_FSDKFace result1 = new AFR_FSDKFace();
-					AFR_FSDKError error1 = engine1.AFR_FSDK_InitialEngine(FaceDB.appid, FaceDB.fr_key);
+					AFR_FSDKError error1 = engine1.AFR_FSDK_InitialEngine(Constants.Arc.appid, Constants.Arc.fr_key);
 					Log.d("com.arcsoft", "AFR_FSDK_InitialEngine = " + error1.getCode());
 					if (error1.getCode() != AFD_FSDKError.MOK) {
 						Message reg = Message.obtain();

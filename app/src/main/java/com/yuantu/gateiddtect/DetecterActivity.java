@@ -100,7 +100,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		
 		@Override
 		public void setup() {
-			AFR_FSDKError error = engine.AFR_FSDK_InitialEngine(FaceDB.appid, FaceDB.fr_key);
+			AFR_FSDKError error = engine.AFR_FSDK_InitialEngine(Constants.Arc.appid, Constants.Arc.fr_key);
 			Log.d(TAG, "AFR_FSDK_InitialEngine = " + error.getCode());
 			error = engine.AFR_FSDK_GetVersion(version);
 			Log.d(TAG, "FR=" + version.toString() + "," + error.getCode()); //(210, 178 - 478, 446), degree = 1　780, 2208 - 1942, 3370
@@ -247,17 +247,17 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		mImageButton = (ImageButton) findViewById(R.id.imageButton);
 		mImageButton.setOnClickListener(this);
 
-		AFT_FSDKError err = engine.AFT_FSDK_InitialFaceEngine(FaceDB.appid, FaceDB.ft_key, AFT_FSDKEngine.AFT_OPF_0_HIGHER_EXT, 16, 5);
+		AFT_FSDKError err = engine.AFT_FSDK_InitialFaceEngine(Constants.Arc.appid, Constants.Arc.ft_key, AFT_FSDKEngine.AFT_OPF_0_HIGHER_EXT, 16, 5);
 		Log.d(TAG, "AFT_FSDK_InitialFaceEngine =" + err.getCode());
 		err = engine.AFT_FSDK_GetVersion(version);
 		Log.d(TAG, "AFT_FSDK_GetVersion:" + version.toString() + "," + err.getCode());
 
-		ASAE_FSDKError error = mAgeEngine.ASAE_FSDK_InitAgeEngine(FaceDB.appid, FaceDB.age_key);
+		ASAE_FSDKError error = mAgeEngine.ASAE_FSDK_InitAgeEngine(Constants.Arc.appid, Constants.Arc.age_key);
 		Log.d(TAG, "ASAE_FSDK_InitAgeEngine =" + error.getCode());
 		error = mAgeEngine.ASAE_FSDK_GetVersion(mAgeVersion);
 		Log.d(TAG, "ASAE_FSDK_GetVersion:" + mAgeVersion.toString() + "," + error.getCode());
 
-		ASGE_FSDKError error1 = mGenderEngine.ASGE_FSDK_InitgGenderEngine(FaceDB.appid, FaceDB.gender_key);
+		ASGE_FSDKError error1 = mGenderEngine.ASGE_FSDK_InitgGenderEngine(Constants.Arc.appid, Constants.Arc.gender_key);
 		Log.d(TAG, "ASGE_FSDK_InitgGenderEngine =" + error1.getCode());
 		error1 = mGenderEngine.ASGE_FSDK_GetVersion(mGenderVersion);
 		Log.d(TAG, "ASGE_FSDK_GetVersion:" + mGenderVersion.toString() + "," + error1.getCode());

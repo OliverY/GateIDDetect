@@ -38,10 +38,8 @@ public class MainActivity extends BaseActivity {
     private final String TAG = MainActivity.class.getSimpleName().toString();
 
     private static final int REQUEST_CODE_IMAGE_CAMERA = 1;
-    private static final int REQUEST_CODE_IMAGE_OP = 2;
-    private static final int REQUEST_CODE_OP = 3;
-    private static final int REQUEST_CODE_DETECT = 4;
-
+    private static final int REQUEST_CODE_OP = 2;
+    private static final int REQUEST_CODE_DETECT = 3;
 
     @BindView(R.id.btn_register)
     Button btnRegister;
@@ -89,32 +87,12 @@ public class MainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE_IMAGE_OP && resultCode == RESULT_OK) {
-            Uri mPath = data.getData();
-            String file = getPath(mPath);
-            Bitmap bmp = GateApp.decodeImage(file);
-            if (bmp == null || bmp.getWidth() <= 0 || bmp.getHeight() <= 0) {
-                Log.e(TAG, "error");
-            } else {
-                Log.i(TAG, "bmp [" + bmp.getWidth() + "," + bmp.getHeight());
-            }
-            startRegister(bmp, file);
-        } else if (requestCode == REQUEST_CODE_OP) {
-//            Log.i(TAG, "RESULT =" + resultCode);
-//            if (data == null) {
-//                return;
-//            }
-//            Bundle bundle = data.getExtras();
-//            String path = bundle.getString("imagePath");
-//            Log.i(TAG, "path=" + path);
+        if (requestCode == REQUEST_CODE_OP) {
             adapter.setNewData(faceRegistList);
-
-
         } else if (requestCode == REQUEST_CODE_IMAGE_CAMERA && resultCode == RESULT_OK) {
-            Uri mPath = ((GateApp) (MainActivity.this.getApplicationContext())).getCaptureImage();
+            Uri mPath = GateApp.instance.getCaptureImage();
             String file = getPath(mPath);
-            Bitmap bmp = GateApp.decodeImage(file);
-            startRegister(bmp, file);
+            startRegister(file);
         }
     }
 
@@ -258,9 +236,10 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * @param mBitmap
+     * 注册页面
+     * @param file
      */
-    private void startRegister(Bitmap mBitmap, String file) {
+    private void startRegister(String file) {
         Intent it = new Intent(MainActivity.this, RegisterActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("imagePath", file);

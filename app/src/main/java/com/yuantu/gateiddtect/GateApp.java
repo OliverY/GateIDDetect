@@ -7,6 +7,8 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.util.Log;
 
+import com.yuantu.gateiddtect.arc.ArcManager;
+
 import org.litepal.LitePalApplication;
 
 /**
@@ -25,8 +27,14 @@ public class GateApp extends LitePalApplication {
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
+
+		//检测Arc是否正常
+		ArcManager.getInstance().initCheck();
+
+		//从数据库初始化人脸数据
 		mFaceDB = new FaceDB(this.getExternalCacheDir().getPath());
 		mImage = null;
+
 	}
 
 	public void setCaptureImage(Uri uri) {

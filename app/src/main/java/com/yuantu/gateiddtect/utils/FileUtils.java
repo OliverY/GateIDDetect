@@ -18,10 +18,9 @@ import java.io.IOException;
 public class FileUtils {
 
     public static void saveBitmap(Bitmap bitmap,String name){
-        File portraitDir = getPortraitPath();
         FileOutputStream fos = null;
         try {
-            File file = new File(portraitDir,name);
+            File file = new File(name);
             fos = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG,90,fos);
             fos.flush();
@@ -46,5 +45,9 @@ public class FileUtils {
             portraitDir.mkdirs();
         }
         return portraitDir;
+    }
+
+    public static String generateImgName(File dir,String name){
+        return new File(dir,name+"_"+System.currentTimeMillis()+".jpg").getAbsolutePath();
     }
 }

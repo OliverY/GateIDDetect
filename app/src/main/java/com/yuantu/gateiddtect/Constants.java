@@ -16,4 +16,13 @@ public class Constants {
         String age_key = "3F9yy2fANTYfWKU61sUmiaEuKuxkCPan8FHb9AbnW6oZ";
         String gender_key = "3F9yy2fANTYfWKU61sUmiaF2VKDu7voTfZH4vA2r4vkN";
     }
+
+    public interface BUNDLE_ARG{
+        String IMG_LIST = "imgList";
+        String NAME = "name";
+    }
+
+    public interface REGEX{
+        String PORTRAIT = "####";
+    }
 }

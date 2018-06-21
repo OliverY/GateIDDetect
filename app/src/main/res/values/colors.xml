@@ -6,8 +6,12 @@
 
     <color name="blue_444693">#444693</color>
 
+    <color name="green_84bf96">#84bf96</color>
+    <color name="green_77ac98">#77ac98</color>
     <color name="green_45b97c">#45b97c</color>
     <color name="green_005831">#005831</color>
+    <color name="green_274d3d">#274d3d</color>
 
     <color name="white">#ffffff</color>
+
 </resources>

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +24,10 @@ import com.yuantu.gateiddtect.adapter.FaceAdapter;
 import com.yuantu.gateiddtect.base.BaseActivity;
 import com.yuantu.gateiddtect.bean.FaceRegist;
 import com.yuantu.gateiddtect.utils.ToastUtils;
+import com.yuantu.gateiddtect.widget.dialog.ShowPortraitDialog;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -60,16 +64,50 @@ public class MainActivity extends BaseActivity {
         adapter.setEmptyView(emptyView);
         adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         adapter.setOnItemClickListener((BaseQuickAdapter adapter, View view, int position) -> {
-            showDialog("是否删除", "确定要删除该用户信息吗",
-                    "删除", () -> {
-                        ToastUtils.showShort(MainActivity.this, "删除");
-                        GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mRegister.get(position).id);
-                        faceRegistList.remove(position);
-                        adapter.notifyItemRemoved(position);
+//            showDialog("是否删除", "确定要删除该用户信息吗",
+//                    "删除", () -> {
+//                        ToastUtils.showShort(MainActivity.this, "删除");
+//                        GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mRegister.get(position).id);
+//                        faceRegistList.remove(position);
+//                        adapter.notifyItemRemoved(position);
+//
+//                    }, "再想想", () -> {
+//                        ToastUtils.showShort(MainActivity.this, "等等");
+//                    });
 
-                    }, "再想想", () -> {
-                        ToastUtils.showShort(MainActivity.this, "等等");
-                    });
+            FaceRegist faceRegist = GateApp.instance.mFaceDB.mRegister.get(position);
+            String[] imgArray = faceRegist.portrait.split(Constants.REGEX.PORTRAIT);
+            ArrayList<String> imgList = new ArrayList<>();
+            for(int i=0;i<imgArray.length;i++){
+                imgList.add(imgArray[i]);
+            }
+            ShowPortraitDialog dialog = ShowPortraitDialog.newInstance(imgList,faceRegist.name);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            dialog.show(ft,"showPortrait");
+
+//            dialog.show(getSupportFragmentManager(),"tag");
+////            dialog.setData(Arrays.asList(imgList));
+//            dialog.setClick(new ShowPortraitDialog.OnDialogClick() {
+//                @Override
+//                public void add() {
+//                    ToastUtils.showShort(MainActivity.this, "add");
+//                }
+//
+//                @Override
+//                public void delete() {
+//                    ToastUtils.showShort(MainActivity.this, "delete");
+//                }
+//
+//                @Override
+//                public void cancel() {
+//                    ToastUtils.showShort(MainActivity.this, "cancel");
+//                }
+//            });
+
+//            ToastUtils.showShort(MainActivity.this,GateApp.instance.mFaceDB.mRegister.get(position).portrait);
+
+
         });
         rcFace.setLayoutManager(new GridLayoutManager(this, 4));
         rcFace.setAdapter(adapter);

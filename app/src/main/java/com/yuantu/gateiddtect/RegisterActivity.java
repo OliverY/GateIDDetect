@@ -292,12 +292,7 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 							.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
-									// 保存图片
-									String imgName = generateImgName();
-									FileUtils.saveBitmap(bitmap,imgName);
-
-
-									((GateApp)RegisterActivity.this.getApplicationContext()).mFaceDB.addFace(mEditText.getText().toString(), mAFR_FSDKFace);
+									((GateApp)RegisterActivity.this.getApplicationContext()).mFaceDB.addFace(mEditText.getText().toString(), mAFR_FSDKFace,bitmap);
 									mRegisterViewAdapter.notifyDataSetChanged();
 									dialog.dismiss();
 								}

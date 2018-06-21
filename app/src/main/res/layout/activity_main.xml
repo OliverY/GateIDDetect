@@ -7,7 +7,6 @@
         android:id="@+id/ll_operate"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@+id/et_test"
         android:layout_marginTop="10dp">
 
         <Button
@@ -15,15 +14,23 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/bg_item_face"
             android:text="用户注册"
+            android:textColor="@color/white"
             android:textSize="20sp" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"/>
 
         <Button
             android:id="@+id/btn_detect"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/bg_item_face"
             android:text="检测识别"
+            android:textColor="@color/white"
             android:textSize="20sp" />
     </LinearLayout>
 

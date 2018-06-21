@@ -97,6 +97,7 @@ public class ShowPortraitDialog extends CustomDialog {
         if (click != null) {
             click.add();
         }
+        dismiss();
     }
 
     @OnClick(R.id.btn_delete)
@@ -104,6 +105,7 @@ public class ShowPortraitDialog extends CustomDialog {
         if (click != null) {
             click.delete();
         }
+        dismiss();
     }
 
     @OnClick(R.id.btn_cancel)
@@ -111,6 +113,7 @@ public class ShowPortraitDialog extends CustomDialog {
         if (click != null) {
             click.cancel();
         }
+        dismiss();
     }
 
     public void setClick(OnDialogClick click) {

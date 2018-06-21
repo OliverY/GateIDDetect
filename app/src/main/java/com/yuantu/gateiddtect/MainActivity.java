@@ -81,32 +81,34 @@ public class MainActivity extends BaseActivity {
             for(int i=0;i<imgArray.length;i++){
                 imgList.add(imgArray[i]);
             }
+
             ShowPortraitDialog dialog = ShowPortraitDialog.newInstance(imgList,faceRegist.name);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             dialog.show(ft,"showPortrait");
 
-//            dialog.show(getSupportFragmentManager(),"tag");
-////            dialog.setData(Arrays.asList(imgList));
-//            dialog.setClick(new ShowPortraitDialog.OnDialogClick() {
-//                @Override
-//                public void add() {
-//                    ToastUtils.showShort(MainActivity.this, "add");
-//                }
-//
-//                @Override
-//                public void delete() {
-//                    ToastUtils.showShort(MainActivity.this, "delete");
-//                }
-//
-//                @Override
-//                public void cancel() {
-//                    ToastUtils.showShort(MainActivity.this, "cancel");
-//                }
-//            });
+            dialog.setClick(new ShowPortraitDialog.OnDialogClick() {
+                @Override
+                public void add() {
+                    ToastUtils.showShort(MainActivity.this, "add");
 
-//            ToastUtils.showShort(MainActivity.this,GateApp.instance.mFaceDB.mRegister.get(position).portrait);
 
+
+                }
+
+                @Override
+                public void delete() {
+                    ToastUtils.showShort(MainActivity.this, "delete");
+
+                    GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mRegister.get(position).id);
+                    faceRegistList.remove(position);
+                    adapter.notifyItemRemoved(position);
+                }
+
+                @Override
+                public void cancel() {
+                }
+            });
 
         });
         rcFace.setLayoutManager(new GridLayoutManager(this, 4));

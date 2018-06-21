@@ -344,7 +344,7 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return ((GateApp)mContext.getApplicationContext()).mFaceDB.mMyRegister.size();
+			return ((GateApp)mContext.getApplicationContext()).mFaceDB.mRegister.size();
 		}
 
 		@Override
@@ -373,8 +373,8 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 				convertView.setTag(holder);
 			}
 
-			if (!((GateApp)mContext.getApplicationContext()).mFaceDB.mMyRegister.isEmpty()) {
-				FaceRegist face = ((GateApp) mContext.getApplicationContext()).mFaceDB.mMyRegister.get(position);
+			if (!((GateApp)mContext.getApplicationContext()).mFaceDB.mRegister.isEmpty()) {
+				FaceRegist face = ((GateApp) mContext.getApplicationContext()).mFaceDB.mRegister.get(position);
 				holder.tv.setText(face.name);
 				//holder.siv.setImageResource(R.mipmap.ic_launcher);
 				convertView.setWillNotDraw(false);
@@ -386,7 +386,7 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Log.d("onItemClick", "onItemClick = " + position + "pos=" + mHListView.getScroll());
-			final FaceRegist faceRegist = ((GateApp)mContext.getApplicationContext()).mFaceDB.mMyRegister.get(position);
+			final FaceRegist faceRegist = ((GateApp)mContext.getApplicationContext()).mFaceDB.mRegister.get(position);
 			final long dbId = faceRegist.id;
 			final String name = faceRegist.name;
 			final int count = faceRegist.mFaceList.size();

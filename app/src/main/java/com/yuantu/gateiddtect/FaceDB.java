@@ -1,12 +1,13 @@
 package com.yuantu.gateiddtect;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.arcsoft.facerecognition.AFR_FSDKFace;
 import com.guo.android_extend.java.ExtInputStream;
 import com.guo.android_extend.java.ExtOutputStream;
 import com.yuantu.gateiddtect.bean.FaceRegist;
-import com.yuantu.gateiddtect.model.FaceID;
+import com.yuantu.gateiddtect.model.FaceModel;
 import com.yuantu.gateiddtect.utils.UUIDUtil;
 
 import org.litepal.LitePal;
@@ -27,29 +28,43 @@ public class FaceDB {
     private final String TAG = this.getClass().toString();
 
     String mDBPath;
-    public List<FaceRegist> mMyRegister;
-    boolean mUpgrade;
+    public List<FaceRegist> mRegister;
 
     public FaceDB(String path) {
         mDBPath = path;
-        mMyRegister = new ArrayList<>();
-        mUpgrade = false;
+        mRegister = new ArrayList<>();
     }
 
+    /**
+     * 获取faceData的数据
+     * @param faceId
+     * @return
+     */
+    private String getFaceDataFilePath(String faceId){
+        if(TextUtils.isEmpty(mDBPath)){
+           throw new RuntimeException("mDBPath can not be null");
+        }
+        return mDBPath + "/" + faceId + ".data";
+    }
+
+    /**
+     * 从数据库中查列表信息
+     * @return
+     */
     private boolean loadInfo() {
-        if (!mMyRegister.isEmpty()) {
+        if (!mRegister.isEmpty()) {
             return false;
         }
         // 从数据库中查询所有的faceId
-        List<FaceID> faceIDList = LitePal.findAll(FaceID.class);
+        List<FaceModel> faceModelList = LitePal.findAll(FaceModel.class);
 
-        for (FaceID faceID : faceIDList) {
-            if (new File(mDBPath + "/" + faceID.faceId + ".data").exists()) {
+        for (FaceModel faceModel : faceModelList) {
+            if (new File(getFaceDataFilePath(faceModel.faceId)).exists()) {
                 FaceRegist regist = new FaceRegist();
-                regist.id = faceID.id;
-                regist.faceId = faceID.faceId;
-                regist.name = faceID.name;
-                mMyRegister.add(regist);
+                regist.id = faceModel.id;
+                regist.faceId = faceModel.faceId;
+                regist.name = faceModel.name;
+                mRegister.add(regist);
             }
         }
         return true;
@@ -57,23 +72,21 @@ public class FaceDB {
 
     public boolean loadFaces() {
         if (loadInfo()) {
+            FileInputStream fs = null;
+            ExtInputStream bos = null;
             try {
-                for (FaceRegist face : mMyRegister) {
+                // 从文件中读取具体人脸信息
+                for (FaceRegist face : mRegister) {
                     Log.d(TAG, "load name:" + face.faceId + "'s face feature data.");
-                    FileInputStream fs = new FileInputStream(mDBPath + "/" + face.faceId + ".data");
-                    ExtInputStream bos = new ExtInputStream(fs);
+                    fs = new FileInputStream(getFaceDataFilePath(face.faceId));
+                    bos = new ExtInputStream(fs);
                     AFR_FSDKFace afr = null;
                     do {
                         if (afr != null) {
-                            if (mUpgrade) {
-                                //upgrade data.
-                            }
                             face.mFaceList.add(afr);
                         }
                         afr = new AFR_FSDKFace();
                     } while (bos.readBytes(afr.getFeatureData()));
-                    bos.close();
-                    fs.close();
                     Log.d(TAG, "load name: size = " + face.mFaceList.size());
                 }
                 return true;
@@ -81,6 +94,17 @@ public class FaceDB {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if(bos!=null){
+                        bos.close();
+                    }
+                    if(fs!=null){
+                        fs.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return false;
@@ -96,7 +120,7 @@ public class FaceDB {
             //check if already registered.
             boolean add = true;
             String uuid = "";
-            for (FaceRegist frface : mMyRegister) {
+            for (FaceRegist frface : mRegister) {
                 if (frface.name.equals(name)) {
                     frface.mFaceList.add(face);
                     uuid = frface.faceId;
@@ -112,12 +136,12 @@ public class FaceDB {
                 frface.mFaceList.add(face);
 
                 // 保存到数据库
-                FaceID faceID = new FaceID();
-                faceID.faceId = uuid;
-                faceID.name = name;
-                faceID.save();
+                FaceModel faceModel = new FaceModel();
+                faceModel.faceId = uuid;
+                faceModel.name = name;
+                faceModel.save();
 
-                mMyRegister.add(frface);
+                mRegister.add(frface);
             }
 
             //save new feature
@@ -142,14 +166,14 @@ public class FaceDB {
     public boolean delete(long id) {
         //check if already registered.
         boolean find = false;
-        for (FaceRegist frface : mMyRegister) {
+        for (FaceRegist frface : mRegister) {
             if (frface.id == id) {
                 File delfile = new File(mDBPath + "/" + frface.faceId + ".data");
                 if (delfile.exists()) {
                     delfile.delete();
                 }
                 //数据库删除
-                LitePal.delete(FaceID.class,id);
+                LitePal.delete(FaceModel.class,id);
                 find = true;
                 break;
             }

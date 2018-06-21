@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -65,7 +63,7 @@ public class MainActivity extends BaseActivity {
             showDialog("是否删除", "确定要删除该用户信息吗",
                     "删除", () -> {
                         ToastUtils.showShort(MainActivity.this, "删除");
-                        GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mMyRegister.get(position).id);
+                        GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mRegister.get(position).id);
                         faceRegistList.remove(position);
                         adapter.notifyItemRemoved(position);
 
@@ -79,7 +77,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        faceRegistList = GateApp.instance.mFaceDB.mMyRegister;
+        faceRegistList = GateApp.instance.mFaceDB.mRegister;
         adapter.setNewData(faceRegistList);
     }
 
@@ -109,7 +107,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btn_detect)
     public void detect() {
-        if (((GateApp) getApplicationContext()).mFaceDB.mMyRegister.isEmpty()) {
+        if (((GateApp) getApplicationContext()).mFaceDB.mRegister.isEmpty()) {
             Toast.makeText(this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
         } else {
             //0是后置，1是前置

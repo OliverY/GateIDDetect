@@ -21,7 +21,6 @@ public class GateApp extends LitePalApplication {
 	public Uri mImage;
 
 	public static GateApp instance;
-	public static String imgDirPath;
 
 	@Override
 	public void onCreate() {

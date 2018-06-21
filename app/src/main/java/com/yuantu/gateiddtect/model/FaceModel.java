@@ -8,7 +8,7 @@ import org.litepal.crud.LitePalSupport;
  * -----------------------------------------
  * Description: 用于存取数据库
  */
-public class FaceID extends LitePalSupport {
+public class FaceModel extends LitePalSupport {
 
     public long id;         //  自动生成，不需要赋值
     public String faceId;   //  用于注册虹软的id，16位的uuid（截取前16位）
@@ -49,7 +49,7 @@ public class FaceID extends LitePalSupport {
 
     @Override
     public String toString() {
-        return "FaceID{" +
+        return "FaceModel{" +
                 "id=" + id +
                 ", faceId='" + faceId + '\'' +
                 ", name='" + name + '\'' +

@@ -79,7 +79,7 @@ public class PermissionAcitivity extends Activity {
 		if (mRequestPermission.isEmpty()) {
 			final ProgressDialog mProgressDialog = new ProgressDialog(this);
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			mProgressDialog.setTitle("loading register data...");
+			mProgressDialog.setTitle("加载数据中");
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.show();
 			new Thread(new Runnable() {

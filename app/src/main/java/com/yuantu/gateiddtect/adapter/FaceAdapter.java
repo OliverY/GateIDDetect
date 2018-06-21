@@ -20,6 +20,6 @@ public class FaceAdapter extends BaseQuickAdapter<FaceRegist,BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, FaceRegist faceRegist) {
         helper.setText(R.id.tv_name,faceRegist.name);
-        helper.setText(R.id.tv_faces,"样本数量："+faceRegist.mFaceList.size());
+        helper.setText(R.id.tv_faces,"采样数："+faceRegist.mFaceList.size());
     }
 }

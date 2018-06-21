@@ -36,6 +36,7 @@ import com.guo.android_extend.widget.ExtImageView;
 import com.guo.android_extend.widget.HListView;
 import com.yuantu.gateiddtect.base.BaseActivity;
 import com.yuantu.gateiddtect.bean.FaceRegist;
+import com.yuantu.gateiddtect.utils.FileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -281,6 +282,7 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 					mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
 					mExtImageView = (ExtImageView) layout.findViewById(R.id.extimageview);
 					mExtImageView.setImageBitmap((Bitmap) msg.obj);
+
 					final Bitmap face = (Bitmap) msg.obj;
 					new AlertDialog.Builder(RegisterActivity.this)
 							.setTitle("请输入注册名字")
@@ -289,6 +291,11 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 							.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
+									// 保存图片
+									String imgName = generateImgName();
+									FileUtils.saveBitmap((Bitmap)msg.obj,imgName);
+
+
 									((GateApp)RegisterActivity.this.getApplicationContext()).mFaceDB.addFace(mEditText.getText().toString(), mAFR_FSDKFace);
 									mRegisterViewAdapter.notifyDataSetChanged();
 									dialog.dismiss();
@@ -312,6 +319,10 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 				}
 			}
 		}
+	}
+
+	private String generateImgName(){
+		return System.currentTimeMillis()+".jpg";
 	}
 
 	class Holder {

@@ -13,6 +13,7 @@ public class FaceID extends LitePalSupport {
     public long id;         //  自动生成，不需要赋值
     public String faceId;   //  用于注册虹软的id，16位的uuid（截取前16位）
     public String name;     //  用户的姓名
+    public String portrait; //  肖像的url
 
     public long getId() {
         return id;
@@ -38,12 +39,21 @@ public class FaceID extends LitePalSupport {
         this.name = name;
     }
 
+    public String getPortrait() {
+        return portrait;
+    }
+
+    public void setPortrait(String portrait) {
+        this.portrait = portrait;
+    }
+
     @Override
     public String toString() {
         return "FaceID{" +
                 "id=" + id +
                 ", faceId='" + faceId + '\'' +
                 ", name='" + name + '\'' +
+                ", portrait='" + portrait + '\'' +
                 '}';
     }
 }

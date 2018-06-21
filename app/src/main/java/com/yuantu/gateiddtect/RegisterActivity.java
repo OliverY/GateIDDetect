@@ -281,7 +281,8 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 					mEditText = (EditText) layout.findViewById(R.id.editview);
 					mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
 					mExtImageView = (ExtImageView) layout.findViewById(R.id.extimageview);
-					mExtImageView.setImageBitmap((Bitmap) msg.obj);
+					Bitmap bitmap = (Bitmap) msg.obj;
+					mExtImageView.setImageBitmap(bitmap);
 
 					final Bitmap face = (Bitmap) msg.obj;
 					new AlertDialog.Builder(RegisterActivity.this)
@@ -293,7 +294,7 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 								public void onClick(DialogInterface dialog, int which) {
 									// 保存图片
 									String imgName = generateImgName();
-									FileUtils.saveBitmap((Bitmap)msg.obj,imgName);
+									FileUtils.saveBitmap(bitmap,imgName);
 
 
 									((GateApp)RegisterActivity.this.getApplicationContext()).mFaceDB.addFace(mEditText.getText().toString(), mAFR_FSDKFace);

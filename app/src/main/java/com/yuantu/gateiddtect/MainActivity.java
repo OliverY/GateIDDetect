@@ -40,6 +40,8 @@ public class MainActivity extends BaseActivity {
     private static final int REQUEST_CODE_IMAGE_CAMERA = 1;
     private static final int REQUEST_CODE_IMAGE_OP = 2;
     private static final int REQUEST_CODE_OP = 3;
+    private static final int REQUEST_CODE_DETECT = 4;
+
 
     @BindView(R.id.btn_register)
     Button btnRegister;
@@ -98,13 +100,16 @@ public class MainActivity extends BaseActivity {
             }
             startRegister(bmp, file);
         } else if (requestCode == REQUEST_CODE_OP) {
-            Log.i(TAG, "RESULT =" + resultCode);
-            if (data == null) {
-                return;
-            }
-            Bundle bundle = data.getExtras();
-            String path = bundle.getString("imagePath");
-            Log.i(TAG, "path=" + path);
+//            Log.i(TAG, "RESULT =" + resultCode);
+//            if (data == null) {
+//                return;
+//            }
+//            Bundle bundle = data.getExtras();
+//            String path = bundle.getString("imagePath");
+//            Log.i(TAG, "path=" + path);
+            adapter.setNewData(faceRegistList);
+
+
         } else if (requestCode == REQUEST_CODE_IMAGE_CAMERA && resultCode == RESULT_OK) {
             Uri mPath = ((GateApp) (MainActivity.this.getApplicationContext())).getCaptureImage();
             String file = getPath(mPath);
@@ -266,7 +271,7 @@ public class MainActivity extends BaseActivity {
     private void startDetector(int camera) {
         Intent it = new Intent(MainActivity.this, DetecterActivity.class);
         it.putExtra("Camera", camera);
-        startActivityForResult(it, REQUEST_CODE_OP);
+        startActivityForResult(it, REQUEST_CODE_DETECT);
     }
 
 }

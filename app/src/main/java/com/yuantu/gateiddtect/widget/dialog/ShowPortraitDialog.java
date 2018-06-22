@@ -83,7 +83,7 @@ public class ShowPortraitDialog extends CustomDialog {
 
     private void initView() {
         adapter = new PortraitAdapter();
-        rv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
+        rv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv.setAdapter(adapter);
         adapter.setNewData(imgList);
 

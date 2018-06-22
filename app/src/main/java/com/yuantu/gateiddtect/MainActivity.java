@@ -111,7 +111,7 @@ public class MainActivity extends BaseActivity {
             });
 
         });
-        rcFace.setLayoutManager(new GridLayoutManager(this, 4));
+        rcFace.setLayoutManager(new GridLayoutManager(this, 3));
         rcFace.setAdapter(adapter);
     }
 

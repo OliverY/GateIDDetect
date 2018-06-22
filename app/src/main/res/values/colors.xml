@@ -12,6 +12,21 @@
     <color name="green_005831">#005831</color>
     <color name="green_274d3d">#274d3d</color>
 
+    <color name="green_009ad6">#009ad6</color>
+    <color name="green_33a3dc">#33a3dc</color>
+
+    <color name="green_72baa7">#72baa7</color>
+    <color name="green_00ae9d">#00ae9d</color>
+    <color name="green_008792">#008792</color>
+    <color name="green_375830">#375830</color>
+
+    <color name="white_d1c7b7">#d1c7b7</color>
+    <color name="white_f2eada">#f2eada</color>
+    <color name="white_d9d6c3">#d9d6c3</color>
+
+
+
+
     <color name="white">#ffffff</color>
 
 </resources>

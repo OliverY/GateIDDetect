@@ -15,10 +15,10 @@ import org.litepal.crud.LitePalSupport;
  */
 public class FaceModel extends LitePalSupport {
 
-    public long id;         //  自动生成，不需要赋值
-    public String faceId;   //  用于注册虹软的id，16位的uuid（截取前16位）
-    public String name;     //  用户的姓名
-    public String portrait; //  肖像的url，数组，以||分割
+    private long id;         //  自动生成，不需要赋值
+    private String faceId;   //  用于注册虹软的id，16位的uuid（截取前16位）
+    private String name;     //  用户的姓名
+    private String portrait; //  肖像的url，数组，以||分割
 
     public long getId() {
         return id;

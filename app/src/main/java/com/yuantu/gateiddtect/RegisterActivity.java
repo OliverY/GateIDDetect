@@ -207,13 +207,13 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 
 	/**
 	 * @note bundle data :
-	 * String imagePath
+	 * String IMAEG_PATH
 	 *
 	 * @param bundle
 	 */
 	private boolean getIntentData(Bundle bundle) {
 		try {
-			mFilePath = bundle.getString("imagePath");
+			mFilePath = bundle.getString(Constants.EXTRA.IMAEG_PATH);
 			if (mFilePath == null || mFilePath.isEmpty()) {
 				return false;
 			}
@@ -232,6 +232,12 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 
 	}
 
@@ -278,6 +284,7 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 		dialog.show(ft,"showRegist");
 		dialog.setClick((name)->{
 			GateApp.instance.mFaceDB.addFace(name, mAFR_FSDKFace,bitmap);
+			finish();
 		});
 
 	}

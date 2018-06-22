@@ -62,12 +62,12 @@ public class FaceDB {
         List<FaceModel> faceModelList = LitePal.findAll(FaceModel.class);
 
         for (FaceModel faceModel : faceModelList) {
-            if (new File(getFaceDataFilePath(faceModel.faceId)).exists()) {
+            if (new File(getFaceDataFilePath(faceModel.getFaceId())).exists()) {
                 FaceRegist regist = new FaceRegist();
-                regist.id = faceModel.id;
-                regist.faceId = faceModel.faceId;
-                regist.name = faceModel.name;
-                regist.portrait = faceModel.portrait;
+                regist.id = faceModel.getId();
+                regist.faceId = faceModel.getFaceId();
+                regist.name = faceModel.getName();
+                regist.portrait = faceModel.getPortrait();
                 mRegister.add(regist);
             }
         }
@@ -134,7 +134,7 @@ public class FaceDB {
         }
 
         // 图片保存到本地
-        String portrait = FileUtils.generateImgName(FileUtils.getPortraitPath(),faceModel.name);
+        String portrait = FileUtils.generateImgName(FileUtils.getPortraitPath(),faceModel.getName());
         Log.i(TAG,"portrait:"+portrait);
         FileUtils.saveBitmap(bitmap,portrait);
 
@@ -145,13 +145,13 @@ public class FaceDB {
         for(FaceRegist frface:mRegister){
             if(id==frface.id){
                 // 更新内存
-                frface.portrait = faceModel.portrait;
+                frface.portrait = faceModel.getPortrait();
                 frface.mFaceList.add(face);
             }
         }
 
         //更新文件
-        saveArcFaceData(face,faceModel.faceId);
+        saveArcFaceData(face,faceModel.getFaceId());
     }
 
     /**
@@ -187,28 +187,35 @@ public class FaceDB {
         if(add){
             // not registered
             // 保存到内存
-            frface = new FaceRegist();
-            frface.faceId = UUIDUtil.generateUUID();
-            frface.name = name;
-            frface.addPortrait(portrait);
-            frface.mFaceList.add(face);
-            mRegister.add(frface);
+            String faceId = UUIDUtil.generateUUID();
 
             // 保存到数据库
             FaceModel faceModel = new FaceModel();
-            faceModel.faceId = frface.faceId;
-            faceModel.name = frface.name;
+            faceModel.setFaceId(faceId);
+            faceModel.setName(name);
             faceModel.addPortrait(portrait);
             faceModel.save();
+
+            FaceModel faceModelDB = LitePal.where("faceId = ?", faceId).findFirst(FaceModel.class);
+            frface = new FaceRegist();
+            frface.id = faceModelDB.getId();
+            frface.name = faceModelDB.getName();
+            frface.portrait = faceModelDB.getPortrait();
+            frface.mFaceList.add(face);
+            mRegister.add(frface);
+
         }else{
             // already exist
             // 更新数据库
             FaceModel faceModel = LitePal.find(FaceModel.class,frface.id);
+            if(faceModel==null){
+                return;
+            }
             faceModel.addPortrait(portrait);
             faceModel.save();
 
             // 保存到内存
-            frface.portrait = faceModel.portrait;
+            frface.portrait = faceModel.getPortrait();
             frface.mFaceList.add(face);
         }
 

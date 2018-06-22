@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:background="@color/green_45b97c"
         android:layout_marginTop="15dp"
+        android:background="@color/green_45b97c"
         android:hint="请输入名字"
         android:padding="5dp" />
 

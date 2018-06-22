@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -23,8 +24,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yuantu.gateiddtect.adapter.FaceAdapter;
 import com.yuantu.gateiddtect.base.BaseActivity;
 import com.yuantu.gateiddtect.bean.FaceRegist;
+import com.yuantu.gateiddtect.model.FaceModel;
 import com.yuantu.gateiddtect.utils.ToastUtils;
 import com.yuantu.gateiddtect.widget.dialog.ShowPortraitDialog;
+
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +56,8 @@ public class MainActivity extends BaseActivity {
     private FaceAdapter adapter;
     private List<FaceRegist> faceRegistList;
 
+    private long selectedId = -1;
+
     @Override
     public int getContentView() {
         return R.layout.activity_main;
@@ -64,16 +70,8 @@ public class MainActivity extends BaseActivity {
         adapter.setEmptyView(emptyView);
         adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         adapter.setOnItemClickListener((BaseQuickAdapter adapter, View view, int position) -> {
-//            showDialog("是否删除", "确定要删除该用户信息吗",
-//                    "删除", () -> {
-//                        ToastUtils.showShort(MainActivity.this, "删除");
-//                        GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mRegister.get(position).id);
-//                        faceRegistList.remove(position);
-//                        adapter.notifyItemRemoved(position);
-//
-//                    }, "再想想", () -> {
-//                        ToastUtils.showShort(MainActivity.this, "等等");
-//                    });
+
+
 
             FaceRegist faceRegist = GateApp.instance.mFaceDB.mRegister.get(position);
             String[] imgArray = faceRegist.portrait.split(Constants.REGEX.PORTRAIT);
@@ -81,6 +79,9 @@ public class MainActivity extends BaseActivity {
             for(int i=0;i<imgArray.length;i++){
                 imgList.add(imgArray[i]);
             }
+
+            FaceModel faceModel = LitePal.find(FaceModel.class,faceRegist.id);
+            Log.e(TAG,"faceModel:"+faceModel);
 
             ShowPortraitDialog dialog = ShowPortraitDialog.newInstance(imgList,faceRegist.name);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -90,19 +91,18 @@ public class MainActivity extends BaseActivity {
             dialog.setClick(new ShowPortraitDialog.OnDialogClick() {
                 @Override
                 public void add() {
-                    ToastUtils.showShort(MainActivity.this, "add");
-
-
-
+                    selectedId = faceRegist.id;
+                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                    Uri uri = getUri();
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                    startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
                 }
 
                 @Override
                 public void delete() {
-                    ToastUtils.showShort(MainActivity.this, "delete");
-
                     GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mRegister.get(position).id);
-                    faceRegistList.remove(position);
                     adapter.notifyItemRemoved(position);
+                    ToastUtils.showShort(MainActivity.this, "删除成功");
                 }
 
                 @Override
@@ -126,6 +126,8 @@ public class MainActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_OP) {
+
+
             adapter.setNewData(faceRegistList);
         } else if (requestCode == REQUEST_CODE_IMAGE_CAMERA && resultCode == RESULT_OK) {
             Uri mPath = GateApp.instance.getCaptureImage();
@@ -137,12 +139,17 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.btn_register)
     public void register() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        Uri uri = getUri();
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
+    }
+
+    private Uri getUri() {
         ContentValues values = new ContentValues(1);
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        ((GateApp) (MainActivity.this.getApplicationContext())).setCaptureImage(uri);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
+        GateApp.instance.setCaptureImage(uri);
+        return uri;
     }
 
     @OnClick(R.id.btn_detect)
@@ -280,9 +287,11 @@ public class MainActivity extends BaseActivity {
     private void startRegister(String file) {
         Intent it = new Intent(MainActivity.this, RegisterActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("imagePath", file);
+        bundle.putString(Constants.EXTRA.IMAEG_PATH, file);
+        bundle.putLong(Constants.EXTRA.ID,selectedId);
         it.putExtras(bundle);
         startActivityForResult(it, REQUEST_CODE_OP);
+        selectedId = -1;
     }
 
     private void startDetector(int camera) {

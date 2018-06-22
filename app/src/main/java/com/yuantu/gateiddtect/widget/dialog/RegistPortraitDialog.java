@@ -68,7 +68,7 @@ public class RegistPortraitDialog extends CustomDialog {
         window.getAttributes().windowAnimations = R.style.CustomDialog;
 
 //        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getDialog().setCanceledOnTouchOutside(true);
+        getDialog().setCanceledOnTouchOutside(false);
 
         View rootView = inflater.inflate(R.layout.dialog_register, container);
         ButterKnife.bind(this, rootView);

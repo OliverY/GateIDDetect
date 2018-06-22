@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,9 +84,11 @@ public class DetectSucceedDialog extends CustomDialog {
     }
 
     private void initView() {
-        Glide.with(getContext()).load(imgUrl);
+        Glide.with(getContext()).load(imgUrl).into(img);
         tvName.setText(name);
-        tvPercent.setText("匹配度："+percent*100+"%");
+
+        percent = Math.round(percent*10000)/100f;
+        tvPercent.setText("匹配度："+percent+"%");
     }
 
     @Override

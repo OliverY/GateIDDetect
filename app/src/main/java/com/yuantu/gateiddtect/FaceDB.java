@@ -183,11 +183,11 @@ public class FaceDB {
         String portrait = FileUtils.generateImgName(FileUtils.getPortraitPath(),name);
         Log.i(TAG,"portrait:"+portrait);
         FileUtils.saveBitmap(bitmap,portrait);
-
+        String faceId = "";
         if(add){
             // not registered
             // 保存到内存
-            String faceId = UUIDUtil.generateUUID();
+            faceId = UUIDUtil.generateUUID();
 
             // 保存到数据库
             FaceModel faceModel = new FaceModel();
@@ -199,6 +199,7 @@ public class FaceDB {
             FaceModel faceModelDB = LitePal.where("faceId = ?", faceId).findFirst(FaceModel.class);
             frface = new FaceRegist();
             frface.id = faceModelDB.getId();
+            frface.faceId = faceModelDB.getFaceId();
             frface.name = faceModelDB.getName();
             frface.portrait = faceModelDB.getPortrait();
             frface.mFaceList.add(face);
@@ -211,6 +212,7 @@ public class FaceDB {
             if(faceModel==null){
                 return;
             }
+            faceId = faceModel.getFaceId();
             faceModel.addPortrait(portrait);
             faceModel.save();
 
@@ -219,7 +221,7 @@ public class FaceDB {
             frface.mFaceList.add(face);
         }
 
-        saveArcFaceData(face,frface.faceId);
+        saveArcFaceData(face,faceId);
     }
 
     /**

@@ -22,7 +22,8 @@ public class Constants {
         String NAME = "name";
         String ID = "id";
         String PORTRAIT = "portrait";
-        String IMAEG_PATH = "imagePath";
+        String IMAGE_PATH = "imagePath";
+        String PERCENT = "percent";
     }
 
     public interface REGEX{

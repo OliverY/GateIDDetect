@@ -31,7 +31,6 @@ import com.yuantu.gateiddtect.widget.dialog.ShowPortraitDialog;
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -287,7 +286,7 @@ public class MainActivity extends BaseActivity {
     private void startRegister(String file) {
         Intent it = new Intent(MainActivity.this, RegisterActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.EXTRA.IMAEG_PATH, file);
+        bundle.putString(Constants.EXTRA.IMAGE_PATH, file);
         bundle.putLong(Constants.EXTRA.ID,selectedId);
         it.putExtras(bundle);
         startActivityForResult(it, REQUEST_CODE_OP);

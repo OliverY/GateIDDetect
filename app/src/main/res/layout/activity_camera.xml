@@ -2,25 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <com.guo.android_extend.widget.CameraSurfaceView
         android:id="@+id/surfaceView"
         android:layout_width="1dp"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp" />
 
     <com.guo.android_extend.widget.CameraGLSurfaceView
         android:id="@+id/glsurfaceView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textView"
@@ -31,7 +32,8 @@
         android:layout_below="@+id/imageView"
         android:layout_marginTop="10dp"
         android:text="@string/app_name"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textView1"
@@ -42,7 +44,8 @@
         android:layout_below="@+id/textView"
         android:layout_marginTop="10dp"
         android:text="@string/app_name"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:visibility="gone" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -55,5 +58,6 @@
         android:background="@android:color/transparent"
         android:scaleX="1.5"
         android:scaleY="1.5"
-        android:src="@android:drawable/ic_popup_sync" />
+        android:src="@android:drawable/ic_popup_sync"
+        android:visibility="gone" />
 </RelativeLayout>

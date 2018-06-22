@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.arcsoft.facedetection.AFD_FSDKEngine;
@@ -23,7 +22,6 @@ import com.arcsoft.facerecognition.AFR_FSDKError;
 import com.arcsoft.facerecognition.AFR_FSDKFace;
 import com.arcsoft.facerecognition.AFR_FSDKVersion;
 import com.guo.android_extend.image.ImageConverter;
-import com.guo.android_extend.widget.ExtImageView;
 import com.yuantu.gateiddtect.base.BaseActivity;
 import com.yuantu.gateiddtect.widget.dialog.RegistPortraitDialog;
 
@@ -207,13 +205,13 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 
 	/**
 	 * @note bundle data :
-	 * String IMAEG_PATH
+	 * String IMAGE_PATH
 	 *
 	 * @param bundle
 	 */
 	private boolean getIntentData(Bundle bundle) {
 		try {
-			mFilePath = bundle.getString(Constants.EXTRA.IMAEG_PATH);
+			mFilePath = bundle.getString(Constants.EXTRA.IMAGE_PATH);
 			if (mFilePath == null || mFilePath.isEmpty()) {
 				return false;
 			}

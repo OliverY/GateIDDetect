@@ -1,7 +1,6 @@
 package com.yuantu.gateiddtect;
 
-import android.app.Activity;
-import android.app.DialogFragment;
+import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -11,14 +10,11 @@ import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.arcsoft.ageestimation.ASAE_FSDKAge;
 import com.arcsoft.ageestimation.ASAE_FSDKEngine;
@@ -48,6 +44,7 @@ import com.guo.android_extend.widget.CameraSurfaceView;
 import com.guo.android_extend.widget.CameraSurfaceView.OnCameraListener;
 import com.yuantu.gateiddtect.bean.FaceRegist;
 import com.yuantu.gateiddtect.widget.dialog.DetectSucceedDialog;
+import com.yxj.dialog.AnimType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -203,11 +200,11 @@ public class DetecterActivity extends AppCompatActivity implements OnCameraListe
     }
 
     private void showDetectDialog(String name, float percent, String imgUrl) {
-
-        DetectSucceedDialog dialog = DetectSucceedDialog.newInstance(name, percent, imgUrl);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        dialog.show(ft, "detectSucceed");
+        Dialog dialog = new DetectSucceedDialog.Builder(this)
+                .setData(name,percent,imgUrl)
+                .setGravity(Gravity.CENTER)
+                .setAnim(AnimType.FalL)
+                .show();
 
         mHandler.postDelayed(new Runnable() {
             @Override

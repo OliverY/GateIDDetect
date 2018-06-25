@@ -51,7 +51,7 @@ public class BaseDialog extends Dialog {
 
         protected Dialog dialog;
 
-        private int gravity;
+        private int gravity = Gravity.CENTER;
         private long duration = 300;
         private boolean cancelAble = true;
         private boolean cancelOutSide = true;

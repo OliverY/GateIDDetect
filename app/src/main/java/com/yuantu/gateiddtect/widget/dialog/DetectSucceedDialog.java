@@ -1,23 +1,16 @@
 package com.yuantu.gateiddtect.widget.dialog;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.yuantu.gateiddtect.Constants;
 import com.yuantu.gateiddtect.R;
+import com.yxj.dialog.BaseDialog;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Author:  Yxj
@@ -25,76 +18,55 @@ import butterknife.ButterKnife;
  * -----------------------------------------
  * Description:
  */
-public class DetectSucceedDialog extends DialogFragment {
+public class DetectSucceedDialog extends BaseDialog {
 
     private static final String TAG = DetectSucceedDialog.class.getSimpleName();
-    @BindView(R.id.img)
-    ImageView img;
-    @BindView(R.id.tv_name)
-    TextView tvName;
-    @BindView(R.id.tv_percent)
-    TextView tvPercent;
 
-    private String name;
-    private float percent;
-    private String imgUrl;
-
-    public static DetectSucceedDialog newInstance(String name,float percent,String imgUrl) {
-        DetectSucceedDialog dialog = new DetectSucceedDialog();
-        Bundle args = new Bundle();
-        args.putString(Constants.EXTRA.NAME,name);
-        args.putFloat(Constants.EXTRA.PERCENT,percent);
-        args.putString(Constants.EXTRA.IMAGE_PATH,imgUrl);
-        dialog.setArguments(args);
-        return dialog;
+    protected DetectSucceedDialog(@NonNull Context context) {
+        super(context);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        Window window = getDialog().getWindow();
-        window.setGravity(Gravity.CENTER);
-//        WindowManager.LayoutParams lp = window.getAttributes();
-//        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
-//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        window.setAttributes(lp);
-        window.getAttributes().windowAnimations = R.style.CustomDialog;
+    public static class Builder extends BaseDialog.Builder {
 
-//        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getDialog().setCanceledOnTouchOutside(false);
-        getDialog().setCancelable(false);
+        @BindView(R.id.img)
+        ImageView img;
+        @BindView(R.id.tv_name)
+        TextView tvName;
+        @BindView(R.id.tv_percent)
+        TextView tvPercent;
 
-        View rootView = inflater.inflate(R.layout.dialog_detect_succeed, container);
-        ButterKnife.bind(this, rootView);
-        initView();
-        return rootView;
-    }
+        private String name;
+        private float percent;
+        private String imgUrl;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_FRAME, android.R.style.Theme_Holo_Light);
-        setCancelable(true);
+        public Builder(Context context) {
+            super(context);
+        }
 
-        name = getArguments().getString(Constants.EXTRA.NAME);
-        percent = getArguments().getFloat(Constants.EXTRA.PERCENT,0);
-        imgUrl = getArguments().getString(Constants.EXTRA.IMAGE_PATH);
-    }
+        @Override
+        public int setContentView() {
+            return R.layout.dialog_detect_succeed;
+        }
 
-    private void initView() {
-        Glide.with(getContext()).load(imgUrl).into(img);
-        tvName.setText(name);
+        @Override
+        public void initView(View layout) {
+            img = layout.findViewById(R.id.img);
+            tvName = layout.findViewById(R.id.tv_name);
+            tvPercent = layout.findViewById(R.id.tv_percent);
 
-        percent = Math.round(percent*10000)/100f;
-        tvPercent.setText("匹配度："+percent+"%");
-    }
+            Glide.with(context).load(imgUrl).into(img);
+            tvName.setText(name);
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        DisplayMetrics dm = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        getDialog().getWindow().setLayout((int) (dm.widthPixels * 0.75), ViewGroup.LayoutParams.WRAP_CONTENT);
+            percent = Math.round(percent*10000)/100f;
+            tvPercent.setText("匹配度："+percent+"%");
+        }
+
+        public Builder setData(String name,float percent,String imgUrl){
+            this.name = name;
+            this.percent = percent;
+            this.imgUrl = imgUrl;
+            return this;
+        }
 
     }
 

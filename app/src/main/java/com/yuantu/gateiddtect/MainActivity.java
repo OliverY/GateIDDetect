@@ -113,27 +113,6 @@ public class MainActivity extends BaseActivity {
                     .setAnim(AnimType.Slidebottom)
                     .show();
 
-//            ShowPortraitDialog dialog = ShowPortraitDialog.newInstance(imgList,faceRegist.name);
-//            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//            ft.setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//            dialog.show(ft,"showPortrait");
-//
-//            dialog.setClick(new ShowPortraitDialog.OnDialogClick() {
-//                @Override
-//                public void add() {
-//
-//                }
-//
-//                @Override
-//                public void delete() {
-//
-//                }
-//
-//                @Override
-//                public void cancel() {
-//                }
-//            });
-
         });
         rcFace.setLayoutManager(new GridLayoutManager(this, 3));
         rcFace.setAdapter(adapter);

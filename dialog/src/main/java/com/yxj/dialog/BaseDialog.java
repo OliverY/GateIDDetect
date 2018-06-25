@@ -36,7 +36,6 @@ public class BaseDialog extends Dialog {
         // window水平方向全屏显示
         Window window = this.getWindow();
         WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
-        layoutParams.gravity = Gravity.BOTTOM;
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
 

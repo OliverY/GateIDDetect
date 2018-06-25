@@ -11,10 +11,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +27,7 @@ import com.yuantu.gateiddtect.bean.FaceRegist;
 import com.yuantu.gateiddtect.model.FaceModel;
 import com.yuantu.gateiddtect.utils.ToastUtils;
 import com.yuantu.gateiddtect.widget.dialog.ShowPortraitDialog;
+import com.yxj.dialog.AnimType;
 
 import org.litepal.LitePal;
 
@@ -82,32 +83,56 @@ public class MainActivity extends BaseActivity {
             FaceModel faceModel = LitePal.find(FaceModel.class,faceRegist.id);
             Log.e(TAG,"faceModel:"+faceModel);
 
-            ShowPortraitDialog dialog = ShowPortraitDialog.newInstance(imgList,faceRegist.name);
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            dialog.show(ft,"showPortrait");
+            new ShowPortraitDialog.Builder(this)
+                    .setName(faceRegist.name)
+                    .setList(imgList)
+                    .setClick(new ShowPortraitDialog.OnDialogClick() {
+                        @Override
+                        public void add() {
+                            selectedId = faceRegist.id;
+                            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                            Uri uri = getUri();
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                            startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
+                        }
 
-            dialog.setClick(new ShowPortraitDialog.OnDialogClick() {
-                @Override
-                public void add() {
-                    selectedId = faceRegist.id;
-                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                    Uri uri = getUri();
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                    startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
-                }
+                        @Override
+                        public void delete() {
+                            GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mRegister.get(position).id);
+                            adapter.notifyItemRemoved(position);
+                            ToastUtils.showShort(MainActivity.this, "删除成功");
+                        }
 
-                @Override
-                public void delete() {
-                    GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mRegister.get(position).id);
-                    adapter.notifyItemRemoved(position);
-                    ToastUtils.showShort(MainActivity.this, "删除成功");
-                }
+                        @Override
+                        public void cancel() {
 
-                @Override
-                public void cancel() {
-                }
-            });
+                        }
+                    })
+                    .setGravity(Gravity.BOTTOM)
+                    .setDuration(300)
+                    .setAnim(AnimType.Slidebottom)
+                    .show();
+
+//            ShowPortraitDialog dialog = ShowPortraitDialog.newInstance(imgList,faceRegist.name);
+//            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//            ft.setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//            dialog.show(ft,"showPortrait");
+//
+//            dialog.setClick(new ShowPortraitDialog.OnDialogClick() {
+//                @Override
+//                public void add() {
+//
+//                }
+//
+//                @Override
+//                public void delete() {
+//
+//                }
+//
+//                @Override
+//                public void cancel() {
+//                }
+//            });
 
         });
         rcFace.setLayoutManager(new GridLayoutManager(this, 3));

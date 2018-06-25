@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +23,8 @@ import com.yxj.dialog.anim.BaseAnim;
  */
 public class BaseDialog extends Dialog {
 
-    protected BaseDialog(@NonNull Context context, int themeResId) {
-        super(context, themeResId);
+    protected BaseDialog(@NonNull Context context) {
+        super(context, R.style.Dialog);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class BaseDialog extends Dialog {
         public Dialog create() {
             root = (FrameLayout) LayoutInflater.from(context).inflate(R.layout.dialog, null);
 
-            dialog = new BaseDialog(context, R.style.Dialog);
+            dialog = new BaseDialog(context);
             dialog.setContentView(root);
 
             dialog.setCancelable(cancelAble);

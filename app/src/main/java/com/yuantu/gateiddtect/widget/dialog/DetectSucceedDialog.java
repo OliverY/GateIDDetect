@@ -2,9 +2,8 @@ package com.yuantu.gateiddtect.widget.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
+import android.support.v4.app.DialogFragment;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.yuantu.gateiddtect.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Author:  Yxj
@@ -27,7 +25,7 @@ import butterknife.OnClick;
  * -----------------------------------------
  * Description:
  */
-public class DetectSucceedDialog extends CustomDialog {
+public class DetectSucceedDialog extends DialogFragment {
 
     private static final String TAG = DetectSucceedDialog.class.getSimpleName();
     @BindView(R.id.img)

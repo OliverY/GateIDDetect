@@ -15,8 +15,8 @@ import android.widget.TextView;
  */
 public class ConfirmDialog extends BaseDialog {
 
-    protected ConfirmDialog(@NonNull Context context, int themeResId) {
-        super(context, themeResId);
+    protected ConfirmDialog(@NonNull Context context) {
+        super(context);
     }
 
     public static class Builder extends BaseDialog.Builder {

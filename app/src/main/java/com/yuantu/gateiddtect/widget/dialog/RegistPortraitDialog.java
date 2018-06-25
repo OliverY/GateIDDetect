@@ -1,25 +1,16 @@
 package com.yuantu.gateiddtect.widget.dialog;
 
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.yuantu.gateiddtect.Constants;
 import com.yuantu.gateiddtect.R;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import com.yxj.dialog.BaseDialog;
 
 /**
  * Author:  Yxj
@@ -27,79 +18,59 @@ import butterknife.OnClick;
  * -----------------------------------------
  * Description:
  */
-public class RegistPortraitDialog extends DialogFragment {
+public class RegistPortraitDialog extends BaseDialog {
 
     private static final String TAG = RegistPortraitDialog.class.getSimpleName();
-    @BindView(R.id.editview)
-    EditText etName;
-    @BindView(R.id.img)
-    ImageView img;
 
-    OnDialogClick click;
-    Bitmap bitmap;
-
-    public static RegistPortraitDialog newInstance(Bitmap bitmap) {
-        RegistPortraitDialog dialog = new RegistPortraitDialog();
-        Bundle args = new Bundle();
-        args.putParcelable(Constants.EXTRA.PORTRAIT,bitmap);
-        dialog.setArguments(args);
-        return dialog;
+    public RegistPortraitDialog(@NonNull Context context) {
+        super(context);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        Window window = getDialog().getWindow();
-        window.setGravity(Gravity.CENTER);
-//        WindowManager.LayoutParams lp = window.getAttributes();
-//        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
-//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        window.setAttributes(lp);
-        window.getAttributes().windowAnimations = R.style.CustomDialog;
+    public static class Builder extends BaseDialog.Builder {
 
-//        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getDialog().setCanceledOnTouchOutside(false);
+        EditText etName;
+        ImageView img;
+        Button btnOk;
 
-        View rootView = inflater.inflate(R.layout.dialog_register, container);
-        ButterKnife.bind(this, rootView);
-        initView();
-        return rootView;
-    }
+        Bitmap bitmap;
+        OnDialogClick click;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_FRAME, android.R.style.Theme_Holo_Light);
-        setCancelable(true);
-
-        bitmap = getArguments().getParcelable(Constants.EXTRA.PORTRAIT);
-    }
-
-    private void initView() {
-        img.setImageBitmap(bitmap);
-    }
-
-    @OnClick(R.id.btn_ok)
-    public void add() {
-        if (click != null) {
-            if(!TextUtils.isEmpty(etName.getText().toString())){
-                click.ok(etName.getText().toString());
-                dismiss();
-            }
+        public Builder(Context context) {
+            super(context);
         }
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        DisplayMetrics dm = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        getDialog().getWindow().setLayout((int) (dm.widthPixels * 0.75), ViewGroup.LayoutParams.WRAP_CONTENT);
+        @Override
+        public int setContentView() {
+            return R.layout.dialog_register;
+        }
 
-    }
+        @Override
+        public void initView(View layout) {
+            etName = layout.findViewById(R.id.editview);
+            img = layout.findViewById(R.id.img);
+            btnOk = layout.findViewById(R.id.btn_ok);
 
-    public void setClick(OnDialogClick click) {
-        this.click = click;
+            btnOk.setOnClickListener(v->{
+                if (click != null) {
+                    if(!TextUtils.isEmpty(etName.getText().toString())){
+                        click.ok(etName.getText().toString());
+                        dialog.dismiss();
+                    }
+                }
+            });
+            img.setImageBitmap(bitmap);
+        }
+
+        public Builder setData(Bitmap bitmap){
+            this.bitmap = bitmap;
+            return this;
+        }
+
+        public Builder setClick(OnDialogClick click){
+            this.click = click;
+            return this;
+        }
+
     }
 
     public interface OnDialogClick {

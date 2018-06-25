@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -276,14 +275,13 @@ public class RegisterActivity extends BaseActivity implements SurfaceHolder.Call
 	}
 
 	private void showAddDialog(Bitmap bitmap){
-		RegistPortraitDialog dialog = RegistPortraitDialog.newInstance(bitmap);
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		ft.setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-		dialog.show(ft,"showRegist");
-		dialog.setClick((name)->{
-			GateApp.instance.mFaceDB.addFace(name, mAFR_FSDKFace,bitmap);
-			finish();
-		});
+		new RegistPortraitDialog.Builder(this)
+				.setData(bitmap)
+				.setClick((name)->{
+					GateApp.instance.mFaceDB.addFace(name, mAFR_FSDKFace,bitmap);
+					finish();
+				})
+				.show();
 
 	}
 

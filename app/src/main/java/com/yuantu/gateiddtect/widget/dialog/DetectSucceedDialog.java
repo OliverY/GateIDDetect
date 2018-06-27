@@ -57,11 +57,11 @@ public class DetectSucceedDialog extends BaseDialog {
             Glide.with(context).load(imgUrl).into(img);
             tvName.setText(name);
 
-            percent = Math.round(percent*10000)/100f;
-            tvPercent.setText("匹配度："+percent+"%");
+            percent = Math.round(percent * 10000) / 100f;
+            tvPercent.setText("匹配度：" + percent + "%");
         }
 
-        public Builder setData(String name,float percent,String imgUrl){
+        public Builder setData(String name, float percent, String imgUrl) {
             this.name = name;
             this.percent = percent;
             this.imgUrl = imgUrl;

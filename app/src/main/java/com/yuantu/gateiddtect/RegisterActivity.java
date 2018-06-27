@@ -46,7 +46,6 @@ import com.guo.android_extend.widget.CameraSurfaceView.OnCameraListener;
 import com.yuantu.gateiddtect.base.BaseActivity;
 import com.yuantu.gateiddtect.utils.BitmapUtils;
 import com.yuantu.gateiddtect.utils.CountDown;
-import com.yuantu.gateiddtect.utils.ToastUtils;
 import com.yuantu.gateiddtect.widget.dialog.RegistPortraitDialog;
 
 import java.util.ArrayList;
@@ -402,7 +401,7 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
                 face_canvas.drawBitmap(mBitmap, result.get(0).getRect(), new Rect(0, 0, width, height), null);
                 Message reg = Message.obtain();
 
-                face_bitmap = BitmapUtils.rotateBitmapAndMirror(face_bitmap, mCameraRotate+180);
+                face_bitmap = BitmapUtils.rotateBitmapAndMirror(face_bitmap, mCameraRotate + 180);
 
                 reg.what = MSG_CODE;
                 reg.arg1 = MSG_EVENT_REG;

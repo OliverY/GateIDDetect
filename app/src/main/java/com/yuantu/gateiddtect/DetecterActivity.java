@@ -8,9 +8,7 @@ import android.graphics.ImageFormat;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -179,7 +177,7 @@ public class DetecterActivity extends BaseActivity implements OnCameraListener, 
 //							mImageView.setImageAlpha(255);
 //							mImageView.setImageBitmap(bmp);
 
-                            showDetectDialog(mFaceRegist.name,max_score, mFaceRegist.portrait.split(Constants.REGEX.PORTRAIT)[0]);
+                            showDetectDialog(mFaceRegist.name, max_score, mFaceRegist.portrait.split(Constants.REGEX.PORTRAIT)[0]);
 
                         }
                     });
@@ -198,7 +196,7 @@ public class DetecterActivity extends BaseActivity implements OnCameraListener, 
 
     private void showDetectDialog(String name, float percent, String imgUrl) {
         Dialog dialog = new DetectSucceedDialog.Builder(this)
-                .setData(name,percent,imgUrl)
+                .setData(name, percent, imgUrl)
                 .setGravity(Gravity.CENTER)
                 .setAnim(AnimType.FalL)
                 .show();

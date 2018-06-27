@@ -52,20 +52,20 @@ public class RegistPortraitDialog extends BaseDialog {
             img = layout.findViewById(R.id.img);
             btnOk = layout.findViewById(R.id.btn_ok);
 
-            btnOk.setOnClickListener(v->{
+            btnOk.setOnClickListener(v -> {
                 if (click != null) {
-                    if(!TextUtils.isEmpty(etName.getText().toString())){
+                    if (!TextUtils.isEmpty(etName.getText().toString())) {
                         click.ok(etName.getText().toString());
                         dialog.dismiss();
                     }
                 }
             });
 
-            if(!TextUtils.isEmpty(editTxt)){
+            if (!TextUtils.isEmpty(editTxt)) {
                 etName.setText(editTxt);
             }
 
-            if(!TextUtils.isEmpty(btnTxt)){
+            if (!TextUtils.isEmpty(btnTxt)) {
                 btnOk.setText(btnTxt);
                 btnOk.setBackgroundColor(context.getResources().getColor(R.color.green_84bf96));
             }
@@ -73,22 +73,22 @@ public class RegistPortraitDialog extends BaseDialog {
             img.setImageBitmap(bitmap);
         }
 
-        public Builder setData(Bitmap bitmap){
+        public Builder setData(Bitmap bitmap) {
             this.bitmap = bitmap;
             return this;
         }
 
-        public Builder setClick(OnDialogClick click){
+        public Builder setClick(OnDialogClick click) {
             this.click = click;
             return this;
         }
 
-        public Builder setBtnText(String txt){
+        public Builder setBtnText(String txt) {
             btnTxt = txt;
             return this;
         }
 
-        public Builder setEditText(String txt){
+        public Builder setEditText(String txt) {
             editTxt = txt;
             return this;
         }

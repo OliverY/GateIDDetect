@@ -31,6 +31,8 @@ public class RegistPortraitDialog extends BaseDialog {
         EditText etName;
         ImageView img;
         Button btnOk;
+        String btnTxt;
+        String editTxt;
 
         Bitmap bitmap;
         OnDialogClick click;
@@ -58,6 +60,16 @@ public class RegistPortraitDialog extends BaseDialog {
                     }
                 }
             });
+
+            if(!TextUtils.isEmpty(editTxt)){
+                etName.setText(editTxt);
+            }
+
+            if(!TextUtils.isEmpty(btnTxt)){
+                btnOk.setText(btnTxt);
+                btnOk.setBackgroundColor(context.getResources().getColor(R.color.green_84bf96));
+            }
+
             img.setImageBitmap(bitmap);
         }
 
@@ -68,6 +80,16 @@ public class RegistPortraitDialog extends BaseDialog {
 
         public Builder setClick(OnDialogClick click){
             this.click = click;
+            return this;
+        }
+
+        public Builder setBtnText(String txt){
+            btnTxt = txt;
+            return this;
+        }
+
+        public Builder setEditText(String txt){
+            editTxt = txt;
             return this;
         }
 

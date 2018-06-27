@@ -1,5 +1,6 @@
 package com.yuantu.gateiddtect;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -73,6 +74,7 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
     public CameraGLSurfaceView mGLSurfaceView;
     private Camera mCamera;
     private long id;
+    private String name;
 
     AFT_FSDKVersion version = new AFT_FSDKVersion();
     AFT_FSDKEngine engine = new AFT_FSDKEngine();
@@ -107,6 +109,7 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
         super.initView();
 
         id = getIntent().getLongExtra(Constants.EXTRA.ID,-1);
+        name = getIntent().getStringExtra(Constants.EXTRA.NAME);
 
         mCameraID = getIntent().getIntExtra("Camera", 0) == 0 ? Camera.CameraInfo.CAMERA_FACING_BACK : Camera.CameraInfo.CAMERA_FACING_FRONT;
         mCameraRotate = getIntent().getIntExtra("Camera", 0) == 0 ? 90 : 270;
@@ -419,15 +422,7 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
             if (msg.what == MSG_CODE) {
                 if (msg.arg1 == MSG_EVENT_REG) {
                     Bitmap bitmap = (Bitmap) msg.obj;
-                    if(id == -1){//新增
-                        showAddDialog(bitmap);
-                    }else{//添加
-                        GateApp.instance.mFaceDB.updateFace(id,mAFR_FSDKFace,bitmap);
-                        mUIHandler.postDelayed(()->{
-                            ToastUtils.showShort(RegisterActivity.this,"添加成功");
-                            finish();
-                        },500);
-                    }
+                    showAddDialog(bitmap);
                 } else if(msg.arg1 == MSG_EVENT_NO_FEATURE ){
                     Toast.makeText(RegisterActivity.this, "人脸特征无法检测，请换一张图片", Toast.LENGTH_SHORT).show();
                 } else if(msg.arg1 == MSG_EVENT_NO_FACE ){
@@ -442,19 +437,33 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
     }
 
     private void showAddDialog(Bitmap bitmap){
-        new RegistPortraitDialog.Builder(this)
-                .setData(bitmap)
-                .setClick((name)->{
-                    GateApp.instance.mFaceDB.addFace(name, mAFR_FSDKFace,bitmap);
-                    mUIHandler.postDelayed(()->{
-                        finish();
-                    },500);
-                })
-                .setOnCancelListener((DialogInterface dialog)->{
-                    pauseDetected = false;
-                    countDown.reset();
-                })
-                .show();
+        if(id == -1){// 新增
+            new RegistPortraitDialog.Builder(this)
+                    .setData(bitmap)
+                    .setClick((name)->{
+                        GateApp.instance.mFaceDB.addFace(name, mAFR_FSDKFace,bitmap);
+                        mUIHandler.postDelayed(()->{
+                            finish();
+                        },1000);
+                    })
+                    .setOnCancelListener((DialogInterface dialog)->{
+                        pauseDetected = false;
+                        countDown.reset();
+                    })
+                    .show();
 
+        }else{// 再添加
+            GateApp.instance.mFaceDB.updateFace(id,mAFR_FSDKFace,bitmap);
+
+            Dialog dialog = new RegistPortraitDialog.Builder(this)
+                    .setData(bitmap)
+                    .setBtnText("保存成功")
+                    .setEditText(name)
+                    .show();
+            mUIHandler.postDelayed(()->{
+                dialog.dismiss();
+                finish();
+            },3000);
+        }
     }
 }

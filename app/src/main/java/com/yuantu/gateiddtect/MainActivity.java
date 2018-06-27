@@ -56,6 +56,7 @@ public class MainActivity extends BaseActivity {
     private List<FaceRegist> faceRegistList;
 
     private long selectedId = -1;
+    private String name = "";
 
     @Override
     public int getContentView() {
@@ -88,6 +89,8 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void add() {
                             selectedId = faceRegist.id;
+                            name = faceRegist.name;
+
 //                            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 //                            Uri uri = getUri();
 //                            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
@@ -290,6 +293,7 @@ public class MainActivity extends BaseActivity {
     private void startRegister() {
         Intent it = new Intent(MainActivity.this, RegisterActivity.class);
         it.putExtra(Constants.EXTRA.ID, selectedId);
+        it.putExtra(Constants.EXTRA.NAME, name);
         it.putExtra("Camera", 1);
         startActivityForResult(it, REQUEST_CODE_OP);
         selectedId = -1;

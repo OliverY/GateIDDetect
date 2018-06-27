@@ -42,6 +42,7 @@ import com.guo.android_extend.widget.CameraFrameData;
 import com.guo.android_extend.widget.CameraGLSurfaceView;
 import com.guo.android_extend.widget.CameraSurfaceView;
 import com.guo.android_extend.widget.CameraSurfaceView.OnCameraListener;
+import com.yuantu.gateiddtect.base.BaseActivity;
 import com.yuantu.gateiddtect.bean.FaceRegist;
 import com.yuantu.gateiddtect.widget.dialog.DetectSucceedDialog;
 import com.yxj.dialog.AnimType;
@@ -50,16 +51,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by yxj on 2018/06/219.
  */
 
-public class DetecterActivity extends AppCompatActivity implements OnCameraListener, View.OnTouchListener, Camera.AutoFocusCallback, View.OnClickListener {
+public class DetecterActivity extends BaseActivity implements OnCameraListener, View.OnTouchListener, Camera.AutoFocusCallback, View.OnClickListener {
     private final String TAG = this.getClass().getSimpleName();
 
     private int mWidth, mHeight, mFormat;
-    private CameraSurfaceView mSurfaceView;
-    private CameraGLSurfaceView mGLSurfaceView;
+    @BindView(R.id.surfaceView)
+    CameraSurfaceView mSurfaceView;
+    @BindView(R.id.glsurfaceView)
+    CameraGLSurfaceView mGLSurfaceView;
     private Camera mCamera;
 
     AFT_FSDKVersion version = new AFT_FSDKVersion();
@@ -83,13 +88,6 @@ public class DetecterActivity extends AppCompatActivity implements OnCameraListe
 
     // 认证成功弹窗时暂停
     boolean pauseDetected = false;
-
-    Runnable hide = new Runnable() {
-        @Override
-        public void run() {
-            isPostted = false;
-        }
-    };
 
     class FRAbsLoop extends AbsLoop {
 
@@ -165,7 +163,6 @@ public class DetecterActivity extends AppCompatActivity implements OnCameraListe
                     //识别到就拦截
                     pauseDetected = true;
 
-                    mHandler.removeCallbacks(hide);
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -220,26 +217,24 @@ public class DetecterActivity extends AppCompatActivity implements OnCameraListe
 //	private ImageView mImageView;
 //	private ImageButton mImageButton;
 
-    /* (non-Javadoc)
-     * @see android.app.Activity#onCreate(android.os.Bundle)
-     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
+    public int getContentView() {
+        return R.layout.activity_camera;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
 
         mCameraID = getIntent().getIntExtra("Camera", 0) == 0 ? Camera.CameraInfo.CAMERA_FACING_BACK : Camera.CameraInfo.CAMERA_FACING_FRONT;
         mCameraRotate = getIntent().getIntExtra("Camera", 0) == 0 ? 90 : 270;
         mCameraMirror = getIntent().getIntExtra("Camera", 0) == 0 ? false : true;
-        mWidth = 1280;
-        mHeight = 960;
+        mWidth = 1920;
+        mHeight = 1080;
         mFormat = ImageFormat.NV21;
         mHandler = new Handler();
 
-        setContentView(R.layout.activity_camera);
-        mGLSurfaceView = (CameraGLSurfaceView) findViewById(R.id.glsurfaceView);
         mGLSurfaceView.setOnTouchListener(this);
-        mSurfaceView = (CameraSurfaceView) findViewById(R.id.surfaceView);
         mSurfaceView.setOnCameraListener(this);
         mSurfaceView.setupGLSurafceView(mGLSurfaceView, true, mCameraMirror, mCameraRotate);
         mSurfaceView.debug_print_fps(true, false);

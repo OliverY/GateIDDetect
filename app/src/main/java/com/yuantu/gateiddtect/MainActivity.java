@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -72,16 +71,15 @@ public class MainActivity extends BaseActivity {
         adapter.setOnItemClickListener((BaseQuickAdapter adapter, View view, int position) -> {
 
 
-
             FaceRegist faceRegist = GateApp.instance.mFaceDB.mRegister.get(position);
             String[] imgArray = faceRegist.portrait.split(Constants.REGEX.PORTRAIT);
             ArrayList<String> imgList = new ArrayList<>();
-            for(int i=0;i<imgArray.length;i++){
+            for (int i = 0; i < imgArray.length; i++) {
                 imgList.add(imgArray[i]);
             }
 
-            FaceModel faceModel = LitePal.find(FaceModel.class,faceRegist.id);
-            Log.e(TAG,"faceModel:"+faceModel);
+            FaceModel faceModel = LitePal.find(FaceModel.class, faceRegist.id);
+            Log.e(TAG, "faceModel:" + faceModel);
 
             new ShowPortraitDialog.Builder(this)
                     .setName(faceRegist.name)
@@ -90,10 +88,11 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void add() {
                             selectedId = faceRegist.id;
-                            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                            Uri uri = getUri();
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                            startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
+//                            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+//                            Uri uri = getUri();
+//                            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+//                            startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
+                            startRegister();
                         }
 
                         @Override
@@ -135,16 +134,18 @@ public class MainActivity extends BaseActivity {
         } else if (requestCode == REQUEST_CODE_IMAGE_CAMERA && resultCode == RESULT_OK) {
             Uri mPath = GateApp.instance.getCaptureImage();
             String file = getPath(mPath);
-            startRegister(file);
+//            startRegister(file);
         }
     }
 
     @OnClick(R.id.btn_register)
     public void register() {
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        Uri uri = getUri();
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
+//        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+//        Uri uri = getUri();
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+//        startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
+
+        startRegister();
     }
 
     private Uri getUri() {
@@ -285,21 +286,17 @@ public class MainActivity extends BaseActivity {
 
     /**
      * 注册页面
-     * @param file
      */
-    private void startRegister(String file) {
+    private void startRegister() {
         Intent it = new Intent(MainActivity.this, RegisterActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.EXTRA.IMAGE_PATH, file);
-        bundle.putLong(Constants.EXTRA.ID,selectedId);
-        it.putExtras(bundle);
+        it.putExtra(Constants.EXTRA.ID, selectedId);
+        it.putExtra("Camera", 1);
         startActivityForResult(it, REQUEST_CODE_OP);
         selectedId = -1;
     }
 
     private void startDetector(int camera) {
-        Intent it = new Intent(MainActivity.this, NewRegisterActivity.class);
-//        Intent it = new Intent(MainActivity.this, DetecterActivity.class);
+        Intent it = new Intent(MainActivity.this, DetecterActivity.class);
         it.putExtra("Camera", camera);
         startActivityForResult(it, REQUEST_CODE_DETECT);
     }

@@ -15,6 +15,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arcsoft.ageestimation.ASAE_FSDKEngine;
@@ -72,6 +73,8 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
     public CameraSurfaceView mSurfaceView;
     @BindView(R.id.glsurfaceView)
     public CameraGLSurfaceView mGLSurfaceView;
+    @BindView(R.id.tv_tips)
+    TextView tvTips;
     private Camera mCamera;
     private long id;
     private String name;
@@ -161,19 +164,24 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
                     save(mBitmap);
                 }
 
+                if(tvTips.getVisibility() == View.VISIBLE){
+                    tvTips.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onPreStart() {
-
+                if(tvTips.getVisibility() == View.GONE){
+                    tvTips.setVisibility(View.VISIBLE);
+                    tvTips.setText("开始倒计时");
+                }
             }
 
             @Override
             public void onStep(int count) {
-                Log.e("yxj","onStep "+ count);
-                ToastUtils.showShort(RegisterActivity.this,"倒计时"+count);
+                tvTips.setText(count+"");
             }
-        });
+        },1000);
     }
 
     @Override
@@ -279,6 +287,9 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
             countDown.start();
         }else {
             Log.e("yxj","无检测");
+            if(tvTips.getVisibility() == View.VISIBLE){
+                tvTips.setVisibility(View.GONE);
+            }
             countDown.reset();
         }
 
@@ -444,7 +455,7 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
                         GateApp.instance.mFaceDB.addFace(name, mAFR_FSDKFace,bitmap);
                         mUIHandler.postDelayed(()->{
                             finish();
-                        },1000);
+                        },500);
                     })
                     .setOnCancelListener((DialogInterface dialog)->{
                         pauseDetected = false;

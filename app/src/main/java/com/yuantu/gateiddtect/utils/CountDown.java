@@ -33,11 +33,17 @@ public class CountDown {
     private Timer timer;
     private volatile boolean isRunning;
     private Callback callback;
+    private long startPre;
 
     public CountDown(int startNum, final Callback callback) {
+        this(startNum,callback,200);
+    }
+
+    public CountDown(int startNum, final Callback callback,long startPre) {
         this.time = startNum;
         this.startNum = startNum;
         this.callback = callback;
+        this.startPre = startPre;
         handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
@@ -84,7 +90,7 @@ public class CountDown {
                 }
                 time--;
             }
-        }, 200, 1000);
+        }, 1000, 1000);
 
     }
 

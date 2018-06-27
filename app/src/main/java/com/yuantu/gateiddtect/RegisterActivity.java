@@ -402,7 +402,7 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
                 face_canvas.drawBitmap(mBitmap, result.get(0).getRect(), new Rect(0, 0, width, height), null);
                 Message reg = Message.obtain();
 
-                face_bitmap = BitmapUtils.rotateBitmap(face_bitmap, mCameraRotate);
+                face_bitmap = BitmapUtils.rotateBitmapAndMirror(face_bitmap, mCameraRotate+180);
 
                 reg.what = MSG_CODE;
                 reg.arg1 = MSG_EVENT_REG;

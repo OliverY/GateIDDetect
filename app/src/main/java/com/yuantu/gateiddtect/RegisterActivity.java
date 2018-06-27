@@ -111,7 +111,7 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
     protected void initView() {
         super.initView();
 
-        id = getIntent().getLongExtra(Constants.EXTRA.ID,-1);
+        id = getIntent().getLongExtra(Constants.EXTRA.ID, -1);
         name = getIntent().getStringExtra(Constants.EXTRA.NAME);
 
         mCameraID = getIntent().getIntExtra("Camera", 0) == 0 ? Camera.CameraInfo.CAMERA_FACING_BACK : Camera.CameraInfo.CAMERA_FACING_FRONT;
@@ -148,9 +148,9 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
 
             @Override
             public void onSuccess() {
-                Log.e("yxj","onSuccess");
+                Log.e("yxj", "onSuccess");
 
-                if(pauseDetected){
+                if (pauseDetected) {
                     return;
                 }
                 pauseDetected = true;
@@ -160,18 +160,18 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
                 ExtByteArrayOutputStream ops = new ExtByteArrayOutputStream();
                 yuv.compressToJpeg(mAFT_FSDKFace.getRect(), 80, ops);
                 Bitmap mBitmap = BitmapFactory.decodeByteArray(ops.getByteArray(), 0, ops.getByteArray().length);
-                if(mBitmap!=null){
+                if (mBitmap != null) {
                     save(mBitmap);
                 }
 
-                if(tvTips.getVisibility() == View.VISIBLE){
+                if (tvTips.getVisibility() == View.VISIBLE) {
                     tvTips.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onPreStart() {
-                if(tvTips.getVisibility() == View.GONE){
+                if (tvTips.getVisibility() == View.GONE) {
                     tvTips.setVisibility(View.VISIBLE);
                     tvTips.setText("开始倒计时");
                 }
@@ -179,9 +179,9 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
 
             @Override
             public void onStep(int count) {
-                tvTips.setText(count+"");
+                tvTips.setText(count + "");
             }
-        },1000);
+        }, 1000);
     }
 
     @Override
@@ -282,12 +282,12 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
         }
 
         // 检测到一张人脸就开始倒计时，中间有中断就停止
-        if(result.size() == 1){
-            Log.e("yxj","检测到人脸");
+        if (result.size() == 1) {
+            Log.e("yxj", "检测到人脸");
             countDown.start();
-        }else {
-            Log.e("yxj","无检测");
-            if(tvTips.getVisibility() == View.VISIBLE){
+        } else {
+            Log.e("yxj", "无检测");
+            if (tvTips.getVisibility() == View.VISIBLE) {
                 tvTips.setVisibility(View.GONE);
             }
             countDown.reset();
@@ -346,7 +346,7 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
 //		}
     }
 
-    private void save(Bitmap mBitmap){
+    private void save(Bitmap mBitmap) {
         byte[] data = new byte[mBitmap.getWidth() * mBitmap.getHeight() * 3 / 2];
         try {
             ImageConverter convert = new ImageConverter();
@@ -373,7 +373,7 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
         }
         err = engine.AFD_FSDK_GetVersion(version);
         Log.d(TAG, "AFD_FSDK_GetVersion =" + version.toString() + ", " + err.getCode());
-        err  = engine.AFD_FSDK_StillImageFaceDetection(data, mBitmap.getWidth(), mBitmap.getHeight(), AFD_FSDKEngine.CP_PAF_NV21, result);
+        err = engine.AFD_FSDK_StillImageFaceDetection(data, mBitmap.getWidth(), mBitmap.getHeight(), AFD_FSDKEngine.CP_PAF_NV21, result);
         Log.d(TAG, "AFD_FSDK_StillImageFaceDetection =" + err.getCode() + "<" + result.size());
 
         if (!result.isEmpty()) {
@@ -393,7 +393,7 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
             Log.d("com.arcsoft", "FR=" + version.toString() + "," + error1.getCode()); //(210, 178 - 478, 446), degree = 1　780, 2208 - 1942, 3370
             error1 = engine1.AFR_FSDK_ExtractFRFeature(data, mBitmap.getWidth(), mBitmap.getHeight(), AFR_FSDKEngine.CP_PAF_NV21, new Rect(result.get(0).getRect()), result.get(0).getDegree(), result1);
             Log.d("com.arcsoft", "Face=" + result1.getFeatureData()[0] + "," + result1.getFeatureData()[1] + "," + result1.getFeatureData()[2] + "," + error1.getCode());
-            if(error1.getCode() == error1.MOK) {
+            if (error1.getCode() == error1.MOK) {
                 mAFR_FSDKFace = result1.clone();
                 int width = result.get(0).getRect().width();
                 int height = result.get(0).getRect().height();
@@ -402,7 +402,7 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
                 face_canvas.drawBitmap(mBitmap, result.get(0).getRect(), new Rect(0, 0, width, height), null);
                 Message reg = Message.obtain();
 
-                face_bitmap = BitmapUtils.rotateBitmap(face_bitmap,mCameraRotate);
+                face_bitmap = BitmapUtils.rotateBitmap(face_bitmap, mCameraRotate);
 
                 reg.what = MSG_CODE;
                 reg.arg1 = MSG_EVENT_REG;
@@ -434,47 +434,47 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
                 if (msg.arg1 == MSG_EVENT_REG) {
                     Bitmap bitmap = (Bitmap) msg.obj;
                     showAddDialog(bitmap);
-                } else if(msg.arg1 == MSG_EVENT_NO_FEATURE ){
+                } else if (msg.arg1 == MSG_EVENT_NO_FEATURE) {
                     Toast.makeText(RegisterActivity.this, "人脸特征无法检测，请换一张图片", Toast.LENGTH_SHORT).show();
-                } else if(msg.arg1 == MSG_EVENT_NO_FACE ){
+                } else if (msg.arg1 == MSG_EVENT_NO_FACE) {
                     Toast.makeText(RegisterActivity.this, "没有检测到人脸，请换一张图片", Toast.LENGTH_SHORT).show();
-                } else if(msg.arg1 == MSG_EVENT_FD_ERROR ){
+                } else if (msg.arg1 == MSG_EVENT_FD_ERROR) {
                     Toast.makeText(RegisterActivity.this, "FD初始化失败，错误码：" + msg.arg2, Toast.LENGTH_SHORT).show();
-                } else if(msg.arg1 == MSG_EVENT_FR_ERROR){
+                } else if (msg.arg1 == MSG_EVENT_FR_ERROR) {
                     Toast.makeText(RegisterActivity.this, "FR初始化失败，错误码：" + msg.arg2, Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
 
-    private void showAddDialog(Bitmap bitmap){
-        if(id == -1){// 新增
+    private void showAddDialog(Bitmap bitmap) {
+        if (id == -1) {// 新增
             new RegistPortraitDialog.Builder(this)
                     .setData(bitmap)
-                    .setClick((name)->{
-                        GateApp.instance.mFaceDB.addFace(name, mAFR_FSDKFace,bitmap);
-                        mUIHandler.postDelayed(()->{
+                    .setClick((name) -> {
+                        GateApp.instance.mFaceDB.addFace(name, mAFR_FSDKFace, bitmap);
+                        mUIHandler.postDelayed(() -> {
                             finish();
-                        },500);
+                        }, 500);
                     })
-                    .setOnCancelListener((DialogInterface dialog)->{
+                    .setOnCancelListener((DialogInterface dialog) -> {
                         pauseDetected = false;
                         countDown.reset();
                     })
                     .show();
 
-        }else{// 再添加
-            GateApp.instance.mFaceDB.updateFace(id,mAFR_FSDKFace,bitmap);
+        } else {// 再添加
+            GateApp.instance.mFaceDB.updateFace(id, mAFR_FSDKFace, bitmap);
 
             Dialog dialog = new RegistPortraitDialog.Builder(this)
                     .setData(bitmap)
                     .setBtnText("保存成功")
                     .setEditText(name)
                     .show();
-            mUIHandler.postDelayed(()->{
+            mUIHandler.postDelayed(() -> {
                 dialog.dismiss();
                 finish();
-            },3000);
+            }, 3000);
         }
     }
 }

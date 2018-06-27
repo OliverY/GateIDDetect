@@ -49,6 +49,7 @@ public class BaseDialog extends Dialog {
         protected FrameLayout root;
 
         protected Dialog dialog;
+        OnCancelListener cancelListener;
 
         private int gravity = Gravity.CENTER;
         private long duration = 300;
@@ -79,6 +80,8 @@ public class BaseDialog extends Dialog {
                 anim.setDuration(duration);
                 anim.play(root);
             });
+
+            dialog.setOnCancelListener(cancelListener);
 
             // 添加子view
             if (root.getChildCount() != 0) {
@@ -127,6 +130,11 @@ public class BaseDialog extends Dialog {
             }
             dialog.show();
             return dialog;
+        }
+
+        public Builder setOnCancelListener(OnCancelListener cancelListener){
+            this.cancelListener = cancelListener;
+            return this;
         }
     }
 

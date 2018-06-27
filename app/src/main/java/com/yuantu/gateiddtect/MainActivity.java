@@ -298,7 +298,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void startDetector(int camera) {
-        Intent it = new Intent(MainActivity.this, DetecterActivity.class);
+        Intent it = new Intent(MainActivity.this, NewRegisterActivity.class);
+//        Intent it = new Intent(MainActivity.this, DetecterActivity.class);
         it.putExtra("Camera", camera);
         startActivityForResult(it, REQUEST_CODE_DETECT);
     }

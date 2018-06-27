@@ -23,6 +23,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         dealIntent(getIntent());
+
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().hide();
+        }
         setContentView(getContentView());
         ButterKnife.bind(this);
         initView();

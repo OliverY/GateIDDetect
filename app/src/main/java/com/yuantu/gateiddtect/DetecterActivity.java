@@ -202,8 +202,6 @@ public class DetecterActivity extends BaseActivity implements OnCameraListener, 
 
     @Override
     protected void initView() {
-        super.initView();
-
         mCameraID = getIntent().getIntExtra("Camera", 0) == 0 ? Camera.CameraInfo.CAMERA_FACING_BACK : Camera.CameraInfo.CAMERA_FACING_FRONT;
         mCameraRotate = getIntent().getIntExtra("Camera", 0) == 0 ? 90 : 270;
         mCameraMirror = getIntent().getIntExtra("Camera", 0) == 0 ? false : true;
@@ -216,7 +214,11 @@ public class DetecterActivity extends BaseActivity implements OnCameraListener, 
         mSurfaceView.setOnCameraListener(this);
         mSurfaceView.setupGLSurafceView(mGLSurfaceView, true, mCameraMirror, mCameraRotate);
         mSurfaceView.debug_print_fps(true, false);
+    }
 
+
+    @Override
+    protected void initData() {
         AFT_FSDKError err = engine.AFT_FSDK_InitialFaceEngine(Constants.Arc.appid, Constants.Arc.ft_key, AFT_FSDKEngine.AFT_OPF_0_HIGHER_EXT, 16, 5);
         Log.d(TAG, "AFT_FSDK_InitialFaceEngine =" + err.getCode());
         err = engine.AFT_FSDK_GetVersion(version);
@@ -282,7 +284,6 @@ public class DetecterActivity extends BaseActivity implements OnCameraListener, 
 
     @Override
     public void setupChanged(int format, int width, int height) {
-
     }
 
     @Override

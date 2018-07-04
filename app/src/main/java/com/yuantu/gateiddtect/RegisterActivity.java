@@ -108,7 +108,6 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
 
     @Override
     protected void initView() {
-        super.initView();
 
         id = getIntent().getLongExtra(Constants.EXTRA.ID, -1);
         name = getIntent().getStringExtra(Constants.EXTRA.NAME);
@@ -185,7 +184,6 @@ public class RegisterActivity extends BaseActivity implements OnCameraListener, 
 
     @Override
     protected void initData() {
-        super.initData();
     }
 
     /* (non-Javadoc)

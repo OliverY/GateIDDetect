@@ -34,18 +34,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    public abstract int getContentView();
-
     protected void dealIntent(Intent intent){
 
     }
 
-    protected void initView(){
+    public abstract int getContentView();
 
-    }
+    protected abstract void initView();
 
-    protected void initData(){
-
-    }
+    protected abstract void initData();
 
 }

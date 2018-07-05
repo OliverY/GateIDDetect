@@ -26,7 +26,7 @@ import java.util.List;
 public class FaceModel {
 
     @Id(autoincrement = true)
-    private long id;         //  自动生成，不需要赋值
+    private Long id;         //  自动生成，不需要赋值
     @Unique
     private String faceId;   //  用于注册虹软的id，16位的uuid（截取前16位）
     private String name;     //  用户的姓名
@@ -34,8 +34,8 @@ public class FaceModel {
     @Transient
     private List<AFR_FSDKFace> faceList = new ArrayList<>();
 
-    @Generated(hash = 749370579)
-    public FaceModel(long id, String faceId, String name, String portrait) {
+    @Generated(hash = 2084856814)
+    public FaceModel(Long id, String faceId, String name, String portrait) {
         this.id = id;
         this.faceId = faceId;
         this.name = name;
@@ -46,12 +46,8 @@ public class FaceModel {
     public FaceModel() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getFaceId() {
@@ -93,6 +89,7 @@ public class FaceModel {
                 ", faceId='" + faceId + '\'' +
                 ", name='" + name + '\'' +
                 ", portrait='" + portrait + '\'' +
+                ", facesize='" + faceList.size() + '\'' +
                 '}';
     }
 
@@ -105,5 +102,9 @@ public class FaceModel {
         }
 
         Log.e("TAG","name:"+name+",portrait:"+portrait);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

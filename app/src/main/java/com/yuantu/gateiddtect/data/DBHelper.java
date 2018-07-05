@@ -28,4 +28,6 @@ public interface DBHelper {
 
     void deleteFace(long id);
 
+    void clear();
+
 }

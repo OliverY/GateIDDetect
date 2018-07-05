@@ -32,7 +32,7 @@ public class DBHelperImpl implements DBHelper {
     }
 
     public void init(Context context) {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "id_detect.db");
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "detect.db");
         SQLiteDatabase db = helper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
@@ -64,5 +64,10 @@ public class DBHelperImpl implements DBHelper {
     @Override
     public void deleteFace(long id) {
         daoSession.getFaceModelDao().deleteByKey(id);
+    }
+
+    @Override
+    public void clear(){
+        daoSession.clear();
     }
 }

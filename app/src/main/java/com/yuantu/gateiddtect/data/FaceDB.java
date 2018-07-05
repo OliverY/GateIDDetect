@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.arcsoft.facerecognition.AFR_FSDKFace;
 import com.guo.android_extend.java.ExtInputStream;
-import com.guo.android_extend.java.ExtOutputStream;
 import com.yuantu.gateiddtect.data.model.FaceModel;
 import com.yuantu.gateiddtect.utils.Logger;
 import com.yuantu.gateiddtect.utils.PathUtils;
@@ -15,7 +14,6 @@ import com.yuantu.gateiddtect.utils.UUIDUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -60,13 +58,13 @@ public class FaceDB {
      */
     public void loadFaces() {
         mRegister = loadDb();
+
+
+        for(FaceModel model:dbHelper.queryAll()){
+            Logger.e(model.toString());
+        }
+
         if (mRegister != null && mRegister.size() != 0) {
-//            for (FaceModel face : mRegister) {
-//                String path = getFaceFilePath(face.getFaceId());
-//                AFR_FSDKFace afr = new AFR_FSDKFace();
-//                afr = fileHelper.readFile(path, afr.getFeatureData());
-//                face.getFaceList().add(afr);
-//            }
 
             FileInputStream fs = null;
             ExtInputStream bos = null;
@@ -198,45 +196,16 @@ public class FaceDB {
         // 更新内存
         faceModel.getFaceList().add(face);
 
-        Logger.e("query::"+dbHelper.queryById(faceModel.getId()).toString());
+//        Logger.e("query::"+dbHelper.queryById(faceModel.getId()).toString());
+
+        for(FaceModel model:dbHelper.queryAll()){
+            Logger.e(model.toString());
+        }
 
         // 更新文件
         fileHelper.saveBitmap(portrait, bitmap);
         fileHelper.saveFile(getFaceFilePath(faceModel.getFaceId()), face.getFeatureData());
 
-    }
-
-    /**
-     * 保存人脸data文件
-     *
-     * @param face
-     * @param faceId
-     */
-    private void saveArcFaceData(AFR_FSDKFace face, String faceId) {
-        // 保存人脸文件
-        FileOutputStream fs = null;
-        ExtOutputStream bos = null;
-        try {
-            //save new feature
-            fs = new FileOutputStream(getFaceFilePath(faceId), true);
-            bos = new ExtOutputStream(fs);
-            bos.writeBytes(face.getFeatureData());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (bos != null) {
-                    bos.close();
-                }
-                if (fs != null) {
-                    fs.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     /**
@@ -293,6 +262,7 @@ public class FaceDB {
     public void destory(){
         mRegister.clear();
         mRegister = null;
+        dbHelper.clear();
     }
 
 }

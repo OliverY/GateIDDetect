@@ -16,10 +16,7 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="@color/green_00ae9d"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
-            app:contentPadding="5dp">
+            style="@style/main_cardview">
 
             <TextView
                 android:layout_width="match_parent"
@@ -37,10 +34,7 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="@color/green_00ae9d"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
-            app:contentPadding="5dp">
+            style="@style/main_cardview">
 
             <TextView
                 android:layout_width="match_parent"

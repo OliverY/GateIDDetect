@@ -1,7 +1,14 @@
 package com.yuantu.gateiddtect.ui.splash;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.os.Handler;
+import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
@@ -10,6 +17,8 @@ import com.yuantu.gateiddtect.Constants;
 import com.yuantu.gateiddtect.R;
 import com.yuantu.gateiddtect.ui.MvpBaseActivity;
 
+import butterknife.BindView;
+
 /**
  * Author:  Yxj
  * Time:    2018/7/4 下午9:03
@@ -17,6 +26,9 @@ import com.yuantu.gateiddtect.ui.MvpBaseActivity;
  * Description:
  */
 public class SplashActivity extends MvpBaseActivity implements SplashView {
+
+    @BindView(R.id.ll_tips)
+    public View tips;
 
     private String[] mPermission = new String[]{
             Manifest.permission.CAMERA,
@@ -49,7 +61,8 @@ public class SplashActivity extends MvpBaseActivity implements SplashView {
 
             @Override
             public void requestPermissionComplete() {
-                showProgress();
+                startAnim();
+
                 new Thread() {
                     @Override
                     public void run() {
@@ -58,6 +71,19 @@ public class SplashActivity extends MvpBaseActivity implements SplashView {
                 }.start();
             }
         }, mPermission);
+    }
+
+    private void startAnim() {
+        TranslateAnimation translateAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 1.0f,
+                Animation.RELATIVE_TO_SELF, -3.5f);
+        translateAnimation.setDuration(1000);
+        translateAnimation.setFillAfter(true);
+        translateAnimation.setInterpolator(new DecelerateInterpolator());
+        tips.setAnimation(translateAnimation);
+        translateAnimation.start();
+
     }
 
     @Override
@@ -75,7 +101,6 @@ public class SplashActivity extends MvpBaseActivity implements SplashView {
     @Override
     public void loadDataFinished() {
         handler.postDelayed(() -> {
-            hideProgress();
             openMain();
         }, 2000);
     }

@@ -46,6 +46,7 @@ dependencies {
 
     // BaseRecyclerViewAdapterHelper
     implementation libs.recyclerview
+    implementation libs.cardview
     implementation libs.BRVAH
 
     // butterknife

@@ -1,6 +1,7 @@
 package com.yuantu.gateiddtect.ui.main;
 
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -37,10 +38,10 @@ public class MainActivity extends MvpBaseActivity implements MainView {
     private static final int REQUEST_CODE_OP = 2;
     private static final int REQUEST_CODE_DETECT = 3;
 
-    @BindView(R.id.btn_register)
-    Button btnRegister;
-    @BindView(R.id.btn_detect)
-    Button btnDetect;
+//    @BindView(R.id.btn_register)
+//    CardView btnRegister;
+//    @BindView(R.id.btn_detect)
+//    CardView btnDetect;
     @BindView(R.id.rv_face)
     RecyclerView rcFace;
     private FaceAdapter adapter;

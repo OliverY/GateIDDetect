@@ -19,6 +19,7 @@ ext {
 
             // BaseRecyclerViewAdapterHelper
             recyclerview       : "com.android.support:recyclerview-v7:${supportVersion}",
+            cardview           : "com.android.support:cardview-v7:${supportVersion}",
             BRVAH              : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30',
 
             // butterknife

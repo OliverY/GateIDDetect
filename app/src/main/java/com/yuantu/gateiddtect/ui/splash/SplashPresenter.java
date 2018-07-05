@@ -1,6 +1,7 @@
-package com.yuantu.gateiddtect.ui;
+package com.yuantu.gateiddtect.ui.splash;
 
 import com.yuantu.gateiddtect.GateApp;
+import com.yuantu.gateiddtect.ui.BasePresenter;
 
 /**
  * Author:  Yxj
@@ -8,7 +9,7 @@ import com.yuantu.gateiddtect.GateApp;
  * -----------------------------------------
  * Description:
  */
-public class SplashPresenter {
+public class SplashPresenter implements BasePresenter{
 
     SplashView view;
 

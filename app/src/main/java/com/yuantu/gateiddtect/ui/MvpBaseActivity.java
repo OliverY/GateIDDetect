@@ -20,13 +20,15 @@ import io.reactivex.disposables.Disposable;
  * -----------------------------------------
  * Description:
  */
-public abstract class MvpBaseActivity extends Activity {
+public abstract class MvpBaseActivity extends Activity implements BaseView{
 
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initPresenter();
         if(getContentView()!=0){
             setContentView(getContentView());
         }
@@ -35,18 +37,22 @@ public abstract class MvpBaseActivity extends Activity {
         initData();
     }
 
+    protected abstract void initPresenter();
+
     public abstract int getContentView();
 
     protected abstract void initView();
 
     protected abstract void initData();
 
-    protected void showProgress() {
+    @Override
+    public void showProgress() {
         hideProgress();
         progressDialog = ProgressUtils.show(this);
     }
 
-    protected void hideProgress() {
+    @Override
+    public void hideProgress() {
         ProgressUtils.hide(progressDialog);
     }
 
@@ -88,7 +94,7 @@ public abstract class MvpBaseActivity extends Activity {
                 });
     }
 
-    interface Callback{
+    protected interface Callback{
         void requestFailed();
         void requestPermissionComplete();
     }

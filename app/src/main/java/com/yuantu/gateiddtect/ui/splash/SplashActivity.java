@@ -1,4 +1,4 @@
-package com.yuantu.gateiddtect.ui;
+package com.yuantu.gateiddtect.ui.splash;
 
 import android.Manifest;
 import android.os.Handler;
@@ -8,6 +8,7 @@ import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.yuantu.gateiddtect.Constants;
 import com.yuantu.gateiddtect.R;
+import com.yuantu.gateiddtect.ui.MvpBaseActivity;
 
 /**
  * Author:  Yxj
@@ -24,13 +25,18 @@ public class SplashActivity extends MvpBaseActivity implements SplashView {
     private SplashPresenter splashPresenter;
 
     @Override
+    protected void initPresenter() {
+        splashPresenter = new SplashPresenter(this);
+    }
+
+    @Override
     public int getContentView() {
         return R.layout.activity_splash;
     }
 
     @Override
     protected void initView() {
-        splashPresenter = new SplashPresenter(this);
+
     }
 
     @Override

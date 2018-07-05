@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.arcsoft.ageestimation.ASAE_FSDKAge;
 import com.arcsoft.ageestimation.ASAE_FSDKEngine;
 import com.arcsoft.ageestimation.ASAE_FSDKError;
@@ -55,6 +56,7 @@ import butterknife.BindView;
  * Created by yxj on 2018/06/219.
  */
 
+@Route(path = Constants.AROUTER.DETECT)
 public class DetecterActivity extends BaseActivity implements OnCameraListener, View.OnTouchListener, Camera.AutoFocusCallback, View.OnClickListener {
     private final String TAG = this.getClass().getSimpleName();
 

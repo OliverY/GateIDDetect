@@ -24,6 +24,7 @@ public class Constants {
         String PORTRAIT = "portrait";
         String IMAGE_PATH = "imagePath";
         String PERCENT = "percent";
+        String CAMERA = "Camera";
     }
 
     public interface REGEX{
@@ -32,5 +33,7 @@ public class Constants {
 
     public interface AROUTER{
         String MAIN = "/yxj/main";
+        String REGISTER = "/yxj/register";
+        String DETECT = "/yxj/detect";
     }
 }

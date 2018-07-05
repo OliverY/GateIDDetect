@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.arcsoft.ageestimation.ASAE_FSDKEngine;
 import com.arcsoft.ageestimation.ASAE_FSDKError;
 import com.arcsoft.ageestimation.ASAE_FSDKVersion;
@@ -57,6 +58,7 @@ import butterknife.BindView;
  * Created by yxj on 2018/06/219.
  */
 
+@Route(path = Constants.AROUTER.REGISTER)
 public class RegisterActivity extends BaseActivity implements OnCameraListener, View.OnTouchListener, Camera.AutoFocusCallback, View.OnClickListener {
     private final String TAG = this.getClass().getSimpleName();
 

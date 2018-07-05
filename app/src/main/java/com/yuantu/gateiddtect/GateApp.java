@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.squareup.leakcanary.LeakCanary;
 import com.yuantu.gateiddtect.arc.ArcManager;
 
 import org.litepal.LitePalApplication;
@@ -27,6 +28,8 @@ public class GateApp extends LitePalApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+        LeakCanary.install(this);
 
         //检测Arc是否正常
         ArcManager.getInstance().initCheck();

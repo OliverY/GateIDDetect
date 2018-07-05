@@ -36,7 +36,10 @@ ext {
 
             // arouter
             arouter            : 'com.alibaba:arouter-api:1.2.1',
-            arouterCompiler    : 'com.alibaba:arouter-compiler:1.1.2'
+            arouterCompiler    : 'com.alibaba:arouter-compiler:1.1.2',
+
+            debugLeakcanary    : 'com.squareup.leakcanary:leakcanary-android:1.3',
+            releaseLeakcanary  : 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
     ]
 
 }

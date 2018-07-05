@@ -1,9 +1,13 @@
 package com.yuantu.gateiddtect.ui;
 
 import android.Manifest;
+import android.os.Handler;
 
+import com.alibaba.android.arouter.facade.Postcard;
+import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.yuantu.gateiddtect.Constants;
+import com.yuantu.gateiddtect.R;
 
 /**
  * Author:  Yxj
@@ -21,7 +25,7 @@ public class SplashActivity extends MvpBaseActivity implements SplashView {
 
     @Override
     public int getContentView() {
-        return 0;
+        return R.layout.activity_splash;
     }
 
     @Override
@@ -54,17 +58,21 @@ public class SplashActivity extends MvpBaseActivity implements SplashView {
     public void openMain() {
         ARouter.getInstance()
                 .build(Constants.AROUTER.MAIN)
-                .navigation();
+                .navigation(this, new NavCallback() {
+                    @Override
+                    public void onArrival(Postcard postcard) {
+                        finish();
+                    }
+                });
     }
 
     @Override
     public void loadDataFinished() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                hideProgress();
-                openMain();
-            }
-        });
+        handler.postDelayed(() -> {
+            hideProgress();
+            openMain();
+        }, 2000);
     }
+
+    Handler handler = new Handler();
 }

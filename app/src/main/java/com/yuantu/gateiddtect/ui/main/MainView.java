@@ -1,6 +1,6 @@
 package com.yuantu.gateiddtect.ui.main;
 
-import com.yuantu.gateiddtect.bean.FaceRegist;
+import com.yuantu.gateiddtect.data.bean.FaceRegist;
 
 import java.util.List;
 

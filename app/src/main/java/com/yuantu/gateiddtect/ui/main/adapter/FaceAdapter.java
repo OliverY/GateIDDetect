@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yuantu.gateiddtect.Constants;
 import com.yuantu.gateiddtect.R;
-import com.yuantu.gateiddtect.bean.FaceRegist;
+import com.yuantu.gateiddtect.data.bean.FaceRegist;
 
 /**
  * Author:  Yxj

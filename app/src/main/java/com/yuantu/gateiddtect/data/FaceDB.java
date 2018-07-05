@@ -1,4 +1,4 @@
-package com.yuantu.gateiddtect;
+package com.yuantu.gateiddtect.data;
 
 import android.graphics.Bitmap;
 import android.text.TextUtils;
@@ -7,8 +7,8 @@ import android.util.Log;
 import com.arcsoft.facerecognition.AFR_FSDKFace;
 import com.guo.android_extend.java.ExtInputStream;
 import com.guo.android_extend.java.ExtOutputStream;
-import com.yuantu.gateiddtect.bean.FaceRegist;
-import com.yuantu.gateiddtect.model.FaceModel;
+import com.yuantu.gateiddtect.data.bean.FaceRegist;
+import com.yuantu.gateiddtect.data.model.FaceModel;
 import com.yuantu.gateiddtect.utils.FileUtils;
 import com.yuantu.gateiddtect.utils.UUIDUtil;
 

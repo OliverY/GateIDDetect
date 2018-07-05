@@ -10,6 +10,7 @@ import android.util.Log;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.squareup.leakcanary.LeakCanary;
 import com.yuantu.gateiddtect.arc.ArcManager;
+import com.yuantu.gateiddtect.data.FaceDB;
 
 import org.litepal.LitePalApplication;
 

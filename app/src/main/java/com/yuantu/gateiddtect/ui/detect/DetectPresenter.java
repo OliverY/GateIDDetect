@@ -2,7 +2,7 @@ package com.yuantu.gateiddtect.ui.detect;
 
 import com.arcsoft.facetracking.AFT_FSDKFace;
 import com.yuantu.gateiddtect.GateApp;
-import com.yuantu.gateiddtect.bean.FaceRegist;
+import com.yuantu.gateiddtect.data.bean.FaceRegist;
 import com.yuantu.gateiddtect.ui.BasePresenter;
 
 import java.util.List;

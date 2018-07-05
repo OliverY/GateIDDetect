@@ -15,7 +15,7 @@ import com.arcsoft.facetracking.AFT_FSDKFace;
 import com.guo.android_extend.java.AbsLoop;
 import com.guo.android_extend.java.ExtByteArrayOutputStream;
 import com.yuantu.gateiddtect.Constants;
-import com.yuantu.gateiddtect.bean.FaceRegist;
+import com.yuantu.gateiddtect.data.bean.FaceRegist;
 
 import java.io.IOException;
 import java.util.List;

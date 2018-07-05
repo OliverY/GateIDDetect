@@ -1,4 +1,4 @@
-package com.yuantu.gateiddtect.model;
+package com.yuantu.gateiddtect.data.model;
 
 import android.text.TextUtils;
 import android.util.Log;

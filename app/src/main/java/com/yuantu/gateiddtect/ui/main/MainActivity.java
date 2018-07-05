@@ -1,13 +1,11 @@
 package com.yuantu.gateiddtect.ui.main;
 
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -15,7 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yuantu.gateiddtect.Constants;
 import com.yuantu.gateiddtect.GateApp;
 import com.yuantu.gateiddtect.R;
-import com.yuantu.gateiddtect.bean.FaceRegist;
+import com.yuantu.gateiddtect.data.bean.FaceRegist;
 import com.yuantu.gateiddtect.ui.MvpBaseActivity;
 import com.yuantu.gateiddtect.ui.main.adapter.FaceAdapter;
 import com.yuantu.gateiddtect.widget.dialog.ShowPortraitDialog;

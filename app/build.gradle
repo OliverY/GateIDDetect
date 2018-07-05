@@ -16,6 +16,12 @@ android {
         sourceSets.main {
             jniLibs.srcDirs = ['libs']
         }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
     }
     buildTypes {
         release {
@@ -23,6 +29,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -48,6 +55,13 @@ dependencies {
     // litepal
     implementation libs.litepal
     implementation libs.glide
+
+    implementation libs.rxpermissions
+    implementation libs.rxjava
+    implementation libs.rxandroid
+
+    implementation libs.arouter
+    annotationProcessor libs.arouterCompiler
 
     //虹软人脸识别
     implementation files('libs/facedetection.jar')

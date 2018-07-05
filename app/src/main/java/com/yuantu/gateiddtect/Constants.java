@@ -29,4 +29,8 @@ public class Constants {
     public interface REGEX{
         String PORTRAIT = "####";
     }
+
+    public interface AROUTER{
+        String MAIN = "/yxj/main";
+    }
 }

@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yuantu.gateiddtect.adapter.FaceAdapter;
 import com.yuantu.gateiddtect.base.BaseActivity;
@@ -39,6 +40,8 @@ import butterknife.OnClick;
 /**
  * Created by yxj on 2018/06/19.
  */
+
+@Route(path = Constants.AROUTER.MAIN)
 public class MainActivity extends BaseActivity {
     private final String TAG = MainActivity.class.getSimpleName().toString();
 

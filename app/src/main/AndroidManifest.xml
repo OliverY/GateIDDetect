@@ -31,8 +31,7 @@
             android:name=".ui.main.MainActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".RegisterActivity"
+        <activity android:name=".ui.register.RegisterActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
             android:screenOrientation="portrait" />
     </application>

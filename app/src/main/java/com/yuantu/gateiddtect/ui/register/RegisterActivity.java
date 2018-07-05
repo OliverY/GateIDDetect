@@ -466,8 +466,8 @@ public class RegisterActivity extends MvpBaseActivity implements RegisterView, O
     private void setTips(String text) {
         if (tvTips.getVisibility() == View.GONE) {
             tvTips.setVisibility(View.VISIBLE);
-            tvTips.setText(text);
         }
+        tvTips.setText(text);
     }
 
     private void hideTips() {

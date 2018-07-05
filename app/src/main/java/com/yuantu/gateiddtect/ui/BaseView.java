@@ -7,6 +7,7 @@ package com.yuantu.gateiddtect.ui;
  * Description:
  */
 public interface BaseView {
+    void initPresenter();
     void showProgress();
     void hideProgress();
 }

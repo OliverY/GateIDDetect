@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetecterActivity"
+            android:name=".ui.detect.DetecterActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
             android:screenOrientation="portrait" />
         <activity

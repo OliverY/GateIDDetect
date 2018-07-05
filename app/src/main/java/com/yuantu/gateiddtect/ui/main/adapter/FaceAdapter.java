@@ -1,4 +1,4 @@
-package com.yuantu.gateiddtect.adapter;
+package com.yuantu.gateiddtect.ui.main.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

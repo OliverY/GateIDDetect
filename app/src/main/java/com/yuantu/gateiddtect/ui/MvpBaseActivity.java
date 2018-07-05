@@ -37,7 +37,7 @@ public abstract class MvpBaseActivity extends Activity implements BaseView{
         initData();
     }
 
-    protected abstract void initPresenter();
+    public abstract void initPresenter();
 
     public abstract int getContentView();
 

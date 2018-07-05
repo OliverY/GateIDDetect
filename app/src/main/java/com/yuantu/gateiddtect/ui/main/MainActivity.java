@@ -52,7 +52,7 @@ public class MainActivity extends MvpBaseActivity implements MainView {
     MainPresenter presenter;
 
     @Override
-    protected void initPresenter() {
+    public void initPresenter() {
         presenter = new MainPresenter(this);
     }
 

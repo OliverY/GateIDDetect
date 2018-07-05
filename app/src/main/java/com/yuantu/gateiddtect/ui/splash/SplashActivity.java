@@ -25,7 +25,7 @@ public class SplashActivity extends MvpBaseActivity implements SplashView {
     private SplashPresenter splashPresenter;
 
     @Override
-    protected void initPresenter() {
+    public void initPresenter() {
         splashPresenter = new SplashPresenter(this);
     }
 

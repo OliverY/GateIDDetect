@@ -17,6 +17,7 @@ public class ProgressUtils {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.show();
         progressDialog.setContentView(R.layout.dialog_progress);
+        progressDialog.setMessage("数据加载中...");
         progressDialog.setIndeterminate(true);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);

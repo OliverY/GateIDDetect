@@ -63,6 +63,7 @@ public class RegistPortraitDialog extends BaseDialog {
 
             if (!TextUtils.isEmpty(editTxt)) {
                 etName.setText(editTxt);
+                etName.setEnabled(false);
             }
 
             if (!TextUtils.isEmpty(btnTxt)) {

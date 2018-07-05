@@ -74,7 +74,7 @@ public class MainActivity extends MvpBaseActivity implements MainView {
 
             showPortaitDialog(position, faceRegist, imgList);
         });
-        rcFace.setLayoutManager(new GridLayoutManager(this, 3));
+        rcFace.setLayoutManager(new GridLayoutManager(this, 2));
         rcFace.setAdapter(adapter);
     }
 

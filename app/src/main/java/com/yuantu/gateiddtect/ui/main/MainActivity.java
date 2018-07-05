@@ -13,7 +13,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yuantu.gateiddtect.Constants;
 import com.yuantu.gateiddtect.GateApp;
 import com.yuantu.gateiddtect.R;
-import com.yuantu.gateiddtect.data.bean.FaceRegist;
+import com.yuantu.gateiddtect.data.FaceDB;
+import com.yuantu.gateiddtect.data.model.FaceModel;
 import com.yuantu.gateiddtect.ui.MvpBaseActivity;
 import com.yuantu.gateiddtect.ui.main.adapter.FaceAdapter;
 import com.yuantu.gateiddtect.widget.dialog.ShowPortraitDialog;
@@ -36,14 +37,10 @@ public class MainActivity extends MvpBaseActivity implements MainView {
     private static final int REQUEST_CODE_OP = 2;
     private static final int REQUEST_CODE_DETECT = 3;
 
-//    @BindView(R.id.btn_register)
-//    CardView btnRegister;
-//    @BindView(R.id.btn_detect)
-//    CardView btnDetect;
     @BindView(R.id.rv_face)
     RecyclerView rcFace;
     private FaceAdapter adapter;
-    private List<FaceRegist> faceRegistList;
+    private List<FaceModel> faceRegistList;
 
     private long selectedId = -1;
     private String name = "";
@@ -68,8 +65,8 @@ public class MainActivity extends MvpBaseActivity implements MainView {
         adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         adapter.setOnItemClickListener((BaseQuickAdapter adapter, View view, int position) -> {
 
-            FaceRegist faceRegist = faceRegistList.get(position);
-            String[] imgArray = faceRegist.portrait.split(Constants.REGEX.PORTRAIT);
+            FaceModel faceRegist = faceRegistList.get(position);
+            String[] imgArray = faceRegist.getPortrait().split(Constants.REGEX.PORTRAIT);
             ArrayList<String> imgList = new ArrayList<>();
             for (int i = 0; i < imgArray.length; i++) {
                 imgList.add(imgArray[i]);
@@ -87,26 +84,26 @@ public class MainActivity extends MvpBaseActivity implements MainView {
     }
 
     @Override
-    public void setData(List<FaceRegist> faceRegistList) {
+    public void setData(List<FaceModel> faceRegistList) {
         this.faceRegistList = faceRegistList;
         adapter.setNewData(faceRegistList);
     }
 
-    private void showPortaitDialog(int position, FaceRegist faceRegist, ArrayList<String> imgList) {
+    private void showPortaitDialog(int position, FaceModel faceRegist, ArrayList<String> imgList) {
         new ShowPortraitDialog.Builder(this)
-                .setName(faceRegist.name)
+                .setName(faceRegist.getName())
                 .setList(imgList)
                 .setClick(new ShowPortraitDialog.OnDialogClick() {
                     @Override
                     public void add() {
-                        selectedId = faceRegist.id;
-                        name = faceRegist.name;
+                        selectedId = faceRegist.getId();
+                        name = faceRegist.getName();
                         openRegister();
                     }
 
                     @Override
                     public void delete() {
-                        GateApp.instance.mFaceDB.delete(GateApp.instance.mFaceDB.mRegister.get(position).id);
+                        FaceDB.getInstance().delete(FaceDB.getInstance().mRegister.get(position).getId());
                         adapter.notifyItemRemoved(position);
                         showMessage("删除成功");
                     }
@@ -170,5 +167,10 @@ public class MainActivity extends MvpBaseActivity implements MainView {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FaceDB.getInstance().destory();
+    }
 }
 

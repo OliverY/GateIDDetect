@@ -26,8 +26,7 @@ ext {
             butterknife        : 'com.jakewharton:butterknife:8.8.1',
             butterknifeCompiler: 'com.jakewharton:butterknife-compiler:8.8.1',
 
-            // litepal
-            litepal            : 'org.litepal.android:core:2.0.0',
+            greendao           : 'org.greenrobot:greendao:3.2.2',
             glide              : 'com.github.bumptech.glide:glide:3.7.0',
 
             // rxpermission

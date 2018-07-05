@@ -133,7 +133,6 @@ public class RegisterActivity extends MvpBaseActivity implements RegisterView, O
 
             @Override
             public void onSuccess() {
-                Log.e("yxj", "onSuccess");
 
                 if (pauseDetected) {
                     return;
@@ -251,10 +250,10 @@ public class RegisterActivity extends MvpBaseActivity implements RegisterView, O
 
         // 检测到一张人脸就开始倒计时，中间有中断就停止
         if (result.size() == 1) {
-            Log.e("yxj", "检测到人脸");
+            Log.d("yxj", "检测到人脸");
             countDown.start();
         } else {
-            Log.e("yxj", "无检测");
+            Log.d("yxj", "无检测");
             hideTips();
             countDown.reset();
         }

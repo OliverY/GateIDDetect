@@ -2,7 +2,8 @@ package com.yuantu.gateiddtect.ui.detect;
 
 import com.arcsoft.facetracking.AFT_FSDKFace;
 import com.yuantu.gateiddtect.GateApp;
-import com.yuantu.gateiddtect.data.bean.FaceRegist;
+import com.yuantu.gateiddtect.data.FaceDB;
+import com.yuantu.gateiddtect.data.model.FaceModel;
 import com.yuantu.gateiddtect.ui.BasePresenter;
 
 import java.util.List;
@@ -33,8 +34,8 @@ public class DetectPresenter implements BasePresenter {
         mFRAbsLoop.shutdown();
     }
 
-    public List<FaceRegist> loadFaceData() {
-        return GateApp.instance.mFaceDB.mRegister;
+    public List<FaceModel> loadFaceData() {
+        return FaceDB.getInstance().mRegister;
     }
 
     public FRAbsLoop getFRAbsLoop() {

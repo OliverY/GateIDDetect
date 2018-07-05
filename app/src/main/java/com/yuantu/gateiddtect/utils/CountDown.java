@@ -98,7 +98,6 @@ public class CountDown {
      * 重置，可以再start
      */
     public void reset() {
-        Log.e("yxj","count reset");
         if (timer != null) {
             timer.cancel();
             timer = null;

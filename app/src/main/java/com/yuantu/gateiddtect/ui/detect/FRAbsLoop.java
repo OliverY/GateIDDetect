@@ -15,7 +15,7 @@ import com.arcsoft.facetracking.AFT_FSDKFace;
 import com.guo.android_extend.java.AbsLoop;
 import com.guo.android_extend.java.ExtByteArrayOutputStream;
 import com.yuantu.gateiddtect.Constants;
-import com.yuantu.gateiddtect.data.bean.FaceRegist;
+import com.yuantu.gateiddtect.data.model.FaceModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,7 +33,7 @@ public class FRAbsLoop extends AbsLoop {
     AFR_FSDKVersion version = new AFR_FSDKVersion();
     AFR_FSDKEngine engine = new AFR_FSDKEngine();
     AFR_FSDKFace result = new AFR_FSDKFace();
-    List<FaceRegist> mResgist;
+    List<FaceModel> mResgist;
 
     byte[] mImageNV21 = null;
 
@@ -71,15 +71,15 @@ public class FRAbsLoop extends AbsLoop {
             AFR_FSDKMatching score = new AFR_FSDKMatching();
             float max = 0.0f;
             String name = null;
-            FaceRegist targetFr = null;
-            for (FaceRegist fr : mResgist) {
-                for (AFR_FSDKFace face : fr.mFaceList) {
+            FaceModel targetFr = null;
+            for (FaceModel fr : mResgist) {
+                for (AFR_FSDKFace face : fr.getFaceList()) {
                     error = engine.AFR_FSDK_FacePairMatching(result, face, score);
                     Log.d(TAG, "Score:" + score.getScore() + ", AFR_FSDK_FacePairMatching=" + error.getCode());
                     if (max < score.getScore()) {
                         max = score.getScore();
                         targetFr = fr;
-                        name = fr.name;
+                        name = fr.getName();
                     }
                 }
             }
@@ -101,11 +101,11 @@ public class FRAbsLoop extends AbsLoop {
                 final float max_score = max;
                 Log.d(TAG, "fit Score:" + max + ", NAME:" + name);
                 final String mNameShow = name;
-                final FaceRegist mFaceRegist = targetFr;
+                final FaceModel mFaceRegist = targetFr;
                 //识别到就拦截
                 pauseDetected = true;
 
-                view.showDetectDialog(mFaceRegist.name, max_score, mFaceRegist.portrait.split(Constants.REGEX.PORTRAIT)[0]);
+                view.showDetectDialog(mFaceRegist.getName(), max_score, mFaceRegist.getPortrait().split(Constants.REGEX.PORTRAIT)[0]);
             }
             mImageNV21 = null;
         }
@@ -132,7 +132,7 @@ public class FRAbsLoop extends AbsLoop {
         this.mAFT_FSDKFace = mAFT_FSDKFace;
     }
 
-    public void setmResgist(List<FaceRegist> mResgist) {
+    public void setmResgist(List<FaceModel> mResgist) {
         this.mResgist = mResgist;
     }
 

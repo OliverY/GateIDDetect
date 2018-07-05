@@ -1,6 +1,6 @@
 package com.yuantu.gateiddtect.ui.main;
 
-import com.yuantu.gateiddtect.data.bean.FaceRegist;
+import com.yuantu.gateiddtect.data.model.FaceModel;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface MainView {
 
     void openDetect();
 
-    void setData(List<FaceRegist> faceRegistList);
+    void setData(List<FaceModel> faceRegistList);
 }

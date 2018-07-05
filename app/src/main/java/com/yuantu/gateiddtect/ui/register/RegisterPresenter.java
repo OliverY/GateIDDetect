@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.arcsoft.facerecognition.AFR_FSDKFace;
 import com.yuantu.gateiddtect.GateApp;
+import com.yuantu.gateiddtect.data.FaceDB;
 import com.yuantu.gateiddtect.ui.BasePresenter;
 
 /**
@@ -21,10 +22,10 @@ public class RegisterPresenter implements BasePresenter {
     }
 
     public void save(String name, AFR_FSDKFace mAFR_FSDKFace, Bitmap bitmap) {
-        GateApp.instance.mFaceDB.addFace(name, mAFR_FSDKFace, bitmap);
+        FaceDB.getInstance().addFace(name, mAFR_FSDKFace, bitmap);
     }
 
     public void update(long id, AFR_FSDKFace mAFR_FSDKFace, Bitmap bitmap) {
-        GateApp.instance.mFaceDB.updateFace(id, mAFR_FSDKFace, bitmap);
+        FaceDB.getInstance().updateFace(id, mAFR_FSDKFace, bitmap);
     }
 }

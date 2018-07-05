@@ -1,5 +1,8 @@
 package com.yuantu.gateiddtect;
 
+import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -11,16 +14,16 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.squareup.leakcanary.LeakCanary;
 import com.yuantu.gateiddtect.arc.ArcManager;
 import com.yuantu.gateiddtect.data.FaceDB;
-
-import org.litepal.LitePalApplication;
+import com.yuantu.gateiddtect.data.model.DaoMaster;
+import com.yuantu.gateiddtect.data.model.DaoSession;
+import com.yuantu.gateiddtect.utils.Logger;
 
 /**
  * Created by yxj on 2018/06/19.
  */
 
-public class GateApp extends LitePalApplication {
+public class GateApp extends Application {
     private final String TAG = this.getClass().toString();
-    public FaceDB mFaceDB;
     public Uri mImage;
 
     public static GateApp instance;
@@ -38,7 +41,7 @@ public class GateApp extends LitePalApplication {
         ARouter.init(this);
 
         //从数据库初始化人脸数据
-        mFaceDB = new FaceDB(this.getExternalCacheDir().getPath());
+        FaceDB.getInstance().init(this);
         mImage = null;
 
     }
@@ -89,4 +92,5 @@ public class GateApp extends LitePalApplication {
         }
         return null;
     }
+
 }

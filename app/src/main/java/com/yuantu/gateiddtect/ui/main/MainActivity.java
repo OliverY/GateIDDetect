@@ -86,6 +86,11 @@ public class MainActivity extends MvpBaseActivity implements MainView {
     @Override
     public void setData(List<FaceModel> faceRegistList) {
         this.faceRegistList = faceRegistList;
+
+//        for(int i=0;i<30;i++){
+//            faceRegistList.add(new FaceModel());
+//        }
+
         adapter.setNewData(faceRegistList);
     }
 

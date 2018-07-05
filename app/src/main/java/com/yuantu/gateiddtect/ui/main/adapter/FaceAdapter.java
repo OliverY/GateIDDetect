@@ -1,13 +1,17 @@
 package com.yuantu.gateiddtect.ui.main.adapter;
 
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.Transformation;
+import com.bumptech.glide.load.engine.Resource;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yuantu.gateiddtect.Constants;
 import com.yuantu.gateiddtect.R;
 import com.yuantu.gateiddtect.data.model.FaceModel;
+import com.yuantu.gateiddtect.utils.GlideCircleTransform;
 
 /**
  * Author:  Yxj

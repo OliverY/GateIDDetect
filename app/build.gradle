@@ -55,6 +55,7 @@ dependencies {
     annotationProcessor libs.butterknifeCompiler
 
     implementation libs.glide
+    implementation libs.roundedImageView
     implementation libs.greendao
 
     implementation libs.rxpermissions

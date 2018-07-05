@@ -1,42 +1,24 @@
 package com.yuantu.gateiddtect.ui.main;
 
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yuantu.gateiddtect.Constants;
-import com.yuantu.gateiddtect.DetecterActivity;
 import com.yuantu.gateiddtect.GateApp;
 import com.yuantu.gateiddtect.R;
-import com.yuantu.gateiddtect.RegisterActivity;
-import com.yuantu.gateiddtect.adapter.FaceAdapter;
-import com.yuantu.gateiddtect.base.BaseActivity;
 import com.yuantu.gateiddtect.bean.FaceRegist;
-import com.yuantu.gateiddtect.model.FaceModel;
 import com.yuantu.gateiddtect.ui.MvpBaseActivity;
-import com.yuantu.gateiddtect.utils.ToastUtils;
+import com.yuantu.gateiddtect.ui.main.adapter.FaceAdapter;
 import com.yuantu.gateiddtect.widget.dialog.ShowPortraitDialog;
 import com.yxj.dialog.AnimType;
-
-import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;

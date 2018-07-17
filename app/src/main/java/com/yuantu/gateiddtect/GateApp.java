@@ -1,8 +1,6 @@
 package com.yuantu.gateiddtect;
 
 import android.app.Application;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -14,9 +12,12 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.squareup.leakcanary.LeakCanary;
 import com.yuantu.gateiddtect.arc.ArcManager;
 import com.yuantu.gateiddtect.data.FaceDB;
-import com.yuantu.gateiddtect.data.model.DaoMaster;
-import com.yuantu.gateiddtect.data.model.DaoSession;
+import com.yuantu.gateiddtect.di.component.AppComponent;
+import com.yuantu.gateiddtect.di.component.DaggerAppComponent;
+import com.yuantu.gateiddtect.di.module.AppModule;
 import com.yuantu.gateiddtect.utils.Logger;
+
+import javax.inject.Inject;
 
 /**
  * Created by yxj on 2018/06/19.
@@ -28,6 +29,11 @@ public class GateApp extends Application {
 
     public static GateApp instance;
 
+    @Inject
+    ArcManager arcManager;
+    @Inject
+    ArcManager arcManager2;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -36,7 +42,13 @@ public class GateApp extends Application {
         LeakCanary.install(this);
 
         //检测Arc是否正常
-        ArcManager.getInstance().initCheck();
+//        ArcManager.getInstance().initCheck();
+        AppComponent appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        appComponent.inject(this);
+
+        Logger.e("arcManager :: "+arcManager.toString());
+        Logger.e("arcManager :: "+arcManager2.toString());
+        arcManager.init();
 
         ARouter.init(this);
 

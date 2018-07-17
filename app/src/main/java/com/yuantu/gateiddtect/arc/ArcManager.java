@@ -8,30 +8,25 @@ import com.arcsoft.facerecognition.AFR_FSDKError;
 import com.arcsoft.facerecognition.AFR_FSDKVersion;
 import com.yuantu.gateiddtect.Constants;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Author:  Yxj
  * Time:    2018/6/21 上午9:08
  * -----------------------------------------
  * Description:
  */
+@Singleton
 public class ArcManager {
 
     private static final String TAG = ArcManager.class.getSimpleName();
 
-    private static ArcManager instance;
-
-    private ArcManager() {
+    @Inject
+    public ArcManager() {
     }
 
-    private static class ArcManagerHolder {
-        static final ArcManager instance = new ArcManager();
-    }
-
-    public static ArcManager getInstance() {
-        return ArcManagerHolder.instance;
-    }
-
-    public void initCheck() {
+    public void init() {
         AFR_FSDKVersion mFRVersion = new AFR_FSDKVersion();
         AFR_FSDKEngine mFREngine = new AFR_FSDKEngine();
         AFR_FSDKError error = mFREngine.AFR_FSDK_InitialEngine(Constants.Arc.appid, Constants.Arc.fr_key);

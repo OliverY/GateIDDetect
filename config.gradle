@@ -40,7 +40,13 @@ ext {
             arouterCompiler    : 'com.alibaba:arouter-compiler:1.1.2',
 
             debugLeakcanary    : 'com.squareup.leakcanary:leakcanary-android:1.3',
-            releaseLeakcanary  : 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
+            releaseLeakcanary  : 'com.squareup.leakcanary:leakcanary-android-no-op:1.3',
+
+            // dagger2
+            dagger2            : 'com.google.dagger:dagger:2.8',
+            daggerCompiler     : 'com.google.dagger:dagger-compiler:2.8',
+            jsr250             : 'javax.annotation:jsr250-api:1.0',
+            inject             : 'javax.inject:javax.inject:1'
     ]
 
 }

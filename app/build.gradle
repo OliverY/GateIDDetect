@@ -5,7 +5,7 @@ def configs = rootProject.ext.android
 def libs = rootProject.ext.denpedencies
 
 android {
-    compileSdkVersion configs.compileSdkVersion
+    compileSdkVersion 26
     buildToolsVersion configs.buildToolsVersion
     defaultConfig {
         applicationId "com.yuantu.gateiddtect"
@@ -20,7 +20,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [moduleName: project.getName()]
             }
         }
     }
@@ -44,34 +44,31 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.runner
     androidTestImplementation libs.espressoCore
-
     // BaseRecyclerViewAdapterHelper
     implementation libs.recyclerview
     implementation libs.cardview
     implementation libs.BRVAH
-
     // butterknife
     implementation libs.butterknife
     annotationProcessor libs.butterknifeCompiler
-
     implementation libs.glide
     implementation libs.roundedImageView
     implementation libs.greendao
-
     implementation libs.rxpermissions
     implementation libs.rxjava
     implementation libs.rxandroid
-
     implementation libs.arouter
     annotationProcessor libs.arouterCompiler
-
     //虹软人脸识别
     implementation files('libs/facedetection.jar')
     implementation files('libs/facerecognition.jar')
     implementation files('libs/facetracking.jar')
     implementation 'com.guo.android_extend:android-extend:1.0.5'
     implementation project(':dialog')
-
     debugImplementation libs.debugLeakcanary
     releaseImplementation libs.releaseLeakcanary
+    implementation libs.dagger2
+    annotationProcessor libs.daggerCompiler
+    compileOnly libs.jsr250
+    implementation libs.inject
 }

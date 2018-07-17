@@ -1,6 +1,7 @@
 package com.yuantu.gateiddtect.di.module;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.yuantu.gateiddtect.arc.ArcManager;
 import com.yuantu.gateiddtect.data.DBHelper;
@@ -8,6 +9,7 @@ import com.yuantu.gateiddtect.data.DBHelperImpl;
 import com.yuantu.gateiddtect.data.FaceDB;
 import com.yuantu.gateiddtect.data.FileHelper;
 import com.yuantu.gateiddtect.data.FileHelperImpl;
+import com.yuantu.gateiddtect.di.ApplicationContext;
 
 import javax.inject.Singleton;
 
@@ -29,6 +31,12 @@ public class AppModule {
         this.application = application;
     }
 
+    @Provides
+    @ApplicationContext
+    Context provideContext(){
+        return application;
+    }
+
     @Singleton
     @Provides
     ArcManager provideArcManager(){
@@ -37,14 +45,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    FileHelper provideFileHelper(){
-        return new FileHelperImpl();
+    FileHelper provideFileHelper(FileHelperImpl fileHelper){
+        return fileHelper;
     }
 
     @Provides
     @Singleton
-    DBHelper provideDBHelper(){
-        return new DBHelperImpl(application);
+    DBHelper provideDBHelper(DBHelperImpl dbHelper){
+        return dbHelper;
     }
 
     @Singleton

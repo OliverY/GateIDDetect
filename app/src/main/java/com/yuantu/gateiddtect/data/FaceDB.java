@@ -8,6 +8,7 @@ import android.util.Log;
 import com.arcsoft.facerecognition.AFR_FSDKFace;
 import com.guo.android_extend.java.ExtInputStream;
 import com.yuantu.gateiddtect.data.model.FaceModel;
+import com.yuantu.gateiddtect.di.ApplicationContext;
 import com.yuantu.gateiddtect.utils.Logger;
 import com.yuantu.gateiddtect.utils.PathUtils;
 import com.yuantu.gateiddtect.utils.UUIDUtil;
@@ -34,7 +35,7 @@ public class FaceDB {
     private FileHelper fileHelper;
 
     @Inject
-    public FaceDB(Context context,DBHelper dbHelper,FileHelper fileHelper) {
+    public FaceDB(@ApplicationContext Context context, DBHelper dbHelper, FileHelper fileHelper) {
         this.dbHelper = dbHelper;
         this.fileHelper = fileHelper;
         dbHelper.init(context);

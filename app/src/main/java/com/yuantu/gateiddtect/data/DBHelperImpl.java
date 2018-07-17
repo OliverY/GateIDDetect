@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.yuantu.gateiddtect.data.model.DaoMaster;
 import com.yuantu.gateiddtect.data.model.DaoSession;
 import com.yuantu.gateiddtect.data.model.FaceModel;
+import com.yuantu.gateiddtect.di.ApplicationContext;
 import com.yuantu.gateiddtect.utils.Logger;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class DBHelperImpl implements DBHelper {
     private DaoSession daoSession;
 
     @Inject
-    public DBHelperImpl(Context context) {
+    public DBHelperImpl(@ApplicationContext Context context) {
         init(context);
     }
 

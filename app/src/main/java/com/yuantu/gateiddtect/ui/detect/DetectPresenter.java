@@ -36,7 +36,7 @@ public class DetectPresenter implements BasePresenter {
     }
 
     public List<FaceModel> loadFaceData() {
-        return GateApp.getInstance().getFaceDB().mRegister;
+        return GateApp.getInstance().getFaceDB().getAllFaceModel();
     }
 
     public FRAbsLoop getFRAbsLoop() {

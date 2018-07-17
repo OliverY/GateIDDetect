@@ -19,7 +19,7 @@ public class MainPresenter implements BasePresenter {
     }
 
     public void loadData() {
-        view.setData(GateApp.getInstance().getFaceDB().mRegister);
+        view.setData(GateApp.getInstance().getFaceDB().getAllFaceModel());
     }
 
 }

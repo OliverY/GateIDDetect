@@ -7,6 +7,7 @@ import com.yuantu.gateiddtect.arc.ArcManager;
 import com.yuantu.gateiddtect.data.DBHelper;
 import com.yuantu.gateiddtect.data.DBHelperImpl;
 import com.yuantu.gateiddtect.data.FaceDB;
+import com.yuantu.gateiddtect.data.FaceDBImpl;
 import com.yuantu.gateiddtect.data.FileHelper;
 import com.yuantu.gateiddtect.data.FileHelperImpl;
 import com.yuantu.gateiddtect.di.ApplicationContext;
@@ -57,8 +58,8 @@ public class AppModule {
 
     @Singleton
     @Provides
-    FaceDB provideFaceDB(DBHelper dbHelper,FileHelper fileHelper){
-        return new FaceDB(application,dbHelper,fileHelper);
+    FaceDB provideFaceDB(FaceDBImpl faceDB){
+        return faceDB;
     }
 
 }

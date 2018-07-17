@@ -35,6 +35,7 @@ public class SplashActivity extends MvpBaseActivity implements SplashView {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
     private SplashPresenter splashPresenter;
+    private Runnable openTask;
 
     @Override
     public void initPresenter() {
@@ -100,10 +101,17 @@ public class SplashActivity extends MvpBaseActivity implements SplashView {
 
     @Override
     public void loadDataFinished() {
-        handler.postDelayed(() -> {
-            openMain();
-        }, 2000);
+        openTask = ()->{
+                openMain();
+        };
+        handler.postDelayed(openTask, 2000);
     }
 
     Handler handler = new Handler();
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(openTask);
+    }
 }

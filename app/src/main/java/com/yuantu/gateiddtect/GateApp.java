@@ -31,8 +31,10 @@ public class GateApp extends Application {
 
     @Inject
     ArcManager arcManager;
+
     @Inject
-    ArcManager arcManager2;
+    FaceDB faceDB;
+    private AppComponent appComponent;
 
     @Override
     public void onCreate() {
@@ -43,17 +45,16 @@ public class GateApp extends Application {
 
         //检测Arc是否正常
 //        ArcManager.getInstance().initCheck();
-        AppComponent appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         appComponent.inject(this);
 
-        Logger.e("arcManager :: "+arcManager.toString());
-        Logger.e("arcManager :: "+arcManager2.toString());
         arcManager.init();
+        //从数据库初始化人脸数据
+
+        Logger.e("facedb :: "+faceDB);
 
         ARouter.init(this);
 
-        //从数据库初始化人脸数据
-        FaceDB.getInstance().init(this);
         mImage = null;
 
     }
@@ -105,4 +106,11 @@ public class GateApp extends Application {
         return null;
     }
 
+    public static GateApp getInstance(){
+        return instance;
+    }
+
+    public FaceDB getFaceDB() {
+        return appComponent.getFaceDB();
+    }
 }

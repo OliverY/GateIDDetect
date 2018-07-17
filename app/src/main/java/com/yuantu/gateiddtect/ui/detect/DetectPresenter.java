@@ -6,6 +6,7 @@ import com.yuantu.gateiddtect.data.FaceDB;
 import com.yuantu.gateiddtect.data.model.FaceModel;
 import com.yuantu.gateiddtect.ui.BasePresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class DetectPresenter implements BasePresenter {
     }
 
     public List<FaceModel> loadFaceData() {
-        return FaceDB.getInstance().mRegister;
+        return GateApp.getInstance().getFaceDB().mRegister;
     }
 
     public FRAbsLoop getFRAbsLoop() {

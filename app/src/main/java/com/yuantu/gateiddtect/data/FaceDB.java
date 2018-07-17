@@ -17,10 +17,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Created by yxj on 2018/06/19.
  */
 
+@Singleton
 public class FaceDB {
     private final String TAG = this.getClass().toString();
 
@@ -29,26 +33,12 @@ public class FaceDB {
     private DBHelper dbHelper;
     private FileHelper fileHelper;
 
-    private FaceDB() {
-    }
-
-    private static class Holder {
-        private static final FaceDB INSTANCE = new FaceDB();
-    }
-
-    public static FaceDB getInstance() {
-        return Holder.INSTANCE;
-    }
-
-    public void init(Context context) {
-        mDBPath = context.getExternalCacheDir().getPath();
-        initDB(context);
-        fileHelper = new FileHelperImpl();
-    }
-
-    private void initDB(Context context) {
-        dbHelper = DBHelperImpl.getInstance();
+    @Inject
+    public FaceDB(Context context,DBHelper dbHelper,FileHelper fileHelper) {
+        this.dbHelper = dbHelper;
+        this.fileHelper = fileHelper;
         dbHelper.init(context);
+        mDBPath = context.getExternalCacheDir().getPath();
     }
 
     /**

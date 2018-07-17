@@ -22,10 +22,10 @@ public class RegisterPresenter implements BasePresenter {
     }
 
     public void save(String name, AFR_FSDKFace mAFR_FSDKFace, Bitmap bitmap) {
-        FaceDB.getInstance().addFace(name, mAFR_FSDKFace, bitmap);
+        GateApp.getInstance().getFaceDB().addFace(name,mAFR_FSDKFace,bitmap);
     }
 
     public void update(long id, AFR_FSDKFace mAFR_FSDKFace, Bitmap bitmap) {
-        FaceDB.getInstance().updateFace(id, mAFR_FSDKFace, bitmap);
+        GateApp.getInstance().getFaceDB().updateFace(id, mAFR_FSDKFace, bitmap);
     }
 }

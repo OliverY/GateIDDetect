@@ -12,13 +12,20 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Author:  Yxj
  * Time:    2018/7/5 下午12:11
  * -----------------------------------------
  * Description:
  */
+@Singleton
 public class FileHelperImpl implements FileHelper {
+
+    @Inject
+    public FileHelperImpl(){}
 
     @Override
     public void saveBitmap(String name,Bitmap bitmap) {

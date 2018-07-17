@@ -10,25 +10,23 @@ import com.yuantu.gateiddtect.utils.Logger;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Author:  Yxj
  * Time:    2018/7/5 下午12:10
  * -----------------------------------------
  * Description:
  */
+@Singleton
 public class DBHelperImpl implements DBHelper {
 
     private DaoSession daoSession;
 
-    private DBHelperImpl() {
-    }
-
-    private static class Holder {
-        private static final DBHelperImpl instance = new DBHelperImpl();
-    }
-
-    public static DBHelperImpl getInstance() {
-        return Holder.instance;
+    @Inject
+    public DBHelperImpl(Context context) {
+        init(context);
     }
 
     public void init(Context context) {

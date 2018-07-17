@@ -1,5 +1,6 @@
 package com.yuantu.gateiddtect.ui.splash;
 
+import com.yuantu.gateiddtect.GateApp;
 import com.yuantu.gateiddtect.data.FaceDB;
 import com.yuantu.gateiddtect.ui.BasePresenter;
 
@@ -18,7 +19,7 @@ public class SplashPresenter implements BasePresenter{
     }
 
     public void initDBData(){
-        FaceDB.getInstance().loadFaces();
+        GateApp.getInstance().getFaceDB().loadFaces();
         view.loadDataFinished();
     }
 

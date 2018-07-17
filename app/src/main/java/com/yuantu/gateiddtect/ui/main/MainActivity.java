@@ -108,7 +108,7 @@ public class MainActivity extends MvpBaseActivity implements MainView {
 
                     @Override
                     public void delete() {
-                        FaceDB.getInstance().delete(FaceDB.getInstance().mRegister.get(position).getId());
+                        GateApp.getInstance().getFaceDB().delete(GateApp.getInstance().getFaceDB().mRegister.get(position).getId());
                         adapter.notifyItemRemoved(position);
                         showMessage("删除成功");
                     }
@@ -175,7 +175,7 @@ public class MainActivity extends MvpBaseActivity implements MainView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FaceDB.getInstance().destory();
+        GateApp.getInstance().getFaceDB().destory();
     }
 }
 
